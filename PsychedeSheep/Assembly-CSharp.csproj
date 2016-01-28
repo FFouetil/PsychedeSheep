@@ -49,6 +49,7 @@
      <Compile Include="Assets\CustomAssets\Scripts\GunShot.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\MegasheepGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Projectile.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\ScaleBounce.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Sheep.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
