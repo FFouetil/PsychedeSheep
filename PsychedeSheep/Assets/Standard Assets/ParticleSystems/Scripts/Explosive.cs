@@ -46,7 +46,7 @@ namespace UnityStandardAssets.Effects
 
                             if (reset)
                             {
-                                m_ObjectResetter.DelayedReset(resetTimeDelay);
+                              //  m_ObjectResetter.DelayedReset(resetTimeDelay);
                             }
                         }
                     }

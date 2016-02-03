@@ -1,4 +1,4 @@
-Shader "Hidden/ConvertDepth" {
+Shader "ConvertDepth" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "" {}
 	}

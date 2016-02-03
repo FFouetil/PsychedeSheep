@@ -6,12 +6,13 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: WaterPlaneMaterial
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _LIGHTMAPPING_STATIC_LIGHTMAPS _UVSEC_UV1
-  m_LightmapFlags: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_Name: PostFxTest
+  m_Shader: {fileID: 4800000, guid: 4d27f8419d936864dae0ce663f2dfe02, type: 3}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _NORMALMAP
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -26,7 +27,7 @@ Material:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: fb6566c21f717904f83743a5a76dd0b0, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -34,6 +35,13 @@ Material:
           name: _DetailNormalMap
         second:
           m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ToonShade
+        second:
+          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -73,14 +81,7 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Occlusion
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _SpecGlossMap
+          name: _MetallicGlossMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -93,27 +94,51 @@ Material:
       data:
         first:
           name: _DstBlend
-        second: 0
+        second: 10
       data:
         first:
           name: _Cutoff
         second: 0.5
       data:
         first:
-          name: _AlphaTestRef
-        second: 0.5
+          name: _Outline
+        second: 0.0167
       data:
         first:
           name: _Parallax
         second: 0.02
       data:
         first:
+          name: _InvFade
+        second: 0.8
+      data:
+        first:
+          name: _BumpAmt
+        second: 99.7
+      data:
+        first:
           name: _Glossiness
+        second: 0.5
+      data:
+        first:
+          name: _Metallic
         second: 0
       data:
         first:
-          name: _ZWrite
+          name: _ScrollSpeedX
         second: 1
+      data:
+        first:
+          name: _ScrollSpeedY
+        second: 1
+      data:
+        first:
+          name: _HueModSpeed
+        second: 1
+      data:
+        first:
+          name: _ZWrite
+        second: 0
       data:
         first:
           name: _BumpScale
@@ -133,15 +158,7 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Lightmapping
-        second: 0
-      data:
-        first:
-          name: _EmissionScaleUI
-        second: 1
+        second: 3
     m_Colors:
       data:
         first:
@@ -150,20 +167,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-      data:
-        first:
-          name: _SpecularColor
-        second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-      data:
-        first:
-          name: _EmissionColorUI
-        second: {r: 0, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _EmissionColorWithMapUI
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: 0, b: 0, a: 1}
