@@ -51,21 +51,29 @@
 			{
 				//UNITY_OUTPUT_DEPTH(i.depth);
 				float d = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv.xy);
-				//d = Linear01Depth(d);
+				
 
 				//UNITY_TRANSFER_DEPTH(i.depth);
 				fixed4 col = tex2D(_MainTex, i.uv);
 				float hueShift = (_SinTime[3] * _HueModSpeed);
 				float depthShift = _SinTime[3];// *i.depth;
+				d = d*0.5+0.5* Linear01Depth(d);
 				//float4 hue = float4(col.rgb.r*abs(sin(hueShift)), col.rgb.g*abs(sin(hueShift + 120)), col.rgb.b*abs(sin(hueShift + 240)),1);
+				/*
 				float4 hue = float4(
-					col.rgb.r*hueShift+col.rgb.g*(1-hueShift),
-					col.rgb.g*(fmod((hueShift+= depthShift),1) + col.rgb.b*(1 - hueShift)),
-					col.rgb.b*(fmod((hueShift += depthShift), 1) + col.rgb.r*(1 - hueShift)),
+					col.rgb.r*(fmod((hueShift*d) + col.rgb.g*(1 - hueShift), 1) ),
+					col.rgb.g*(fmod(((hueShift+=0.333333)*d) + col.rgb.b*(1 - hueShift), 1)),
+					col.rgb.b*(fmod(((hueShift += 0.333333)*d)+ col.rgb.r*(1 - hueShift), 1)),
 					1);
-				col.r *= d;
-				col.g *= d;
-				col.b *= d;
+				*/
+				float4 hue = col;
+				//col = hue;
+				
+				col.r =fmod(0.75*hue.rgb.r*(hueShift*d) + 0.25*hue.rgb.b*(1 - hueShift*d),1);
+				col.g =fmod(0.75*hue.rgb.g*((hueShift +=0.333333)*d) + 0.25*hue.rgb.r*(1 - hueShift*d), 1);
+				col.b =fmod(0.75*hue.rgb.b*((hueShift += 0.333333)*d) + 0.25*hue.rgb.g*(1 - hueShift*d),1);
+				//col.r = col.r*
+				//*/
 				//col.a = 1;
 				//col = EncodeFloatRGBA(d);
 				// just invert the colors

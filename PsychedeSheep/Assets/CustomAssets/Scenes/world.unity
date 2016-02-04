@@ -372,6 +372,8 @@ MonoBehaviour:
   cam: {fileID: 1494864292}
   target: {fileID: 2069324536}
   fxMaterial: {fileID: 2100000, guid: 5bf9d603dd2ced547808ba85d93906b6, type: 2}
+  enablePostProcess: 1
+  autoAdjustClippingPlanes: 1
 --- !u!81 &1494864289
 AudioListener:
   m_ObjectHideFlags: 0
@@ -409,8 +411,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 5.3633094
+  far clip plane: 80.53017
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -433,8 +435,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1494864287}
-  m_LocalRotation: {x: 0.22044434, y: 0.31653205, z: -0.07588779, w: 0.9194851}
-  m_LocalPosition: {x: -8.99, y: 7.43, z: -11.51}
+  m_LocalRotation: {x: 0.20412454, y: 0.31782642, z: -0.07026971, w: 0.9232452}
+  m_LocalPosition: {x: -8.99, y: 6.79, z: -11.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
