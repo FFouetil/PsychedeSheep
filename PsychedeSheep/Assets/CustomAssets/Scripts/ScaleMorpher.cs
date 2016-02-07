@@ -2,7 +2,9 @@
 using System.Collections;
 
 //[ExecuteInEditMode]
-public class ScaleBounce : MonoBehaviour {
+[DisallowMultipleComponent]
+public class ScaleMorpher : MonoBehaviour, ITimed {
+
 
 	public enum MorphingMode{
 		Phase,
@@ -12,19 +14,21 @@ public class ScaleBounce : MonoBehaviour {
 		//SmoothedLinear,
 	}
 
-	public MorphingMode morphingMode;
+    public float TimerDuration { get { return morphCycleDuration; } }
+
+    public MorphingMode morphingMode;
     public float morphCycleDuration =1f;
     protected float morphCycleTimer;
 	[Range(-0.95f,0.95f)]
     public float morphHorizontalRatio = 0.1f;
 	[Range(-0.95f, 0.95f)]
     public float morphVerticalRatio = -0.2f;
+
     Vector3 originalScale;
 	float sign=1;
-
-
-    //[SerializeField]
     float timerPhase;
+
+
 	// Use this for initialization
 	void Start () {
         originalScale = transform.localScale;
@@ -48,9 +52,9 @@ public class ScaleBounce : MonoBehaviour {
 		var timerRatio = morphCycleTimer / morphCycleDuration;
 
 		switch (mode){
-		case MorphingMode.Phase:return Mathf.Sin(timerRatio * Mathf.PI*2f);
-		case MorphingMode.NormalBounce:return Mathf.Sin(timerRatio * Mathf.PI+Mathf.PI);
-		case MorphingMode.ReverseBounce:return Mathf.Sin(timerRatio * Mathf.PI);
+		case MorphingMode.Phase:return MathHelper.PhaseNegPos(timerRatio);
+		case MorphingMode.NormalBounce:return MathHelper.Bounce(timerRatio);
+		case MorphingMode.ReverseBounce:return MathHelper.ReverseBounce(timerRatio);
 		//case MorphingMode.Linear:return Mathf.Lerp((sign=Mathf.Sign(0.999f-timerRatio)),-sign,timerRatio);
 		//case MorphingMode.SmoothedLinear:return Mathf.SmoothStep(0*sign,1*sign,timerRatio);
 		default: return 1;

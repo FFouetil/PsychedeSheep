@@ -51,6 +51,7 @@
 			{
 				//UNITY_OUTPUT_DEPTH(i.depth);
 				float d = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv.xy);
+				i.uv.xy[0] += _SinTime[2]/2;
 				
 
 				//UNITY_TRANSFER_DEPTH(i.depth);
@@ -70,8 +71,8 @@
 				//col = hue;
 				
 				col.r =fmod(0.75*hue.rgb.r*(hueShift*d) + 0.25*hue.rgb.b*(1 - hueShift*d),1);
-				col.g =fmod(0.75*hue.rgb.g*((hueShift +=0.333333)*d) + 0.25*hue.rgb.r*(1 - hueShift*d), 1);
-				col.b =fmod(0.75*hue.rgb.b*((hueShift += 0.333333)*d) + 0.25*hue.rgb.g*(1 - hueShift*d),1);
+				col.g =fmod(0.75*hue.rgb.g*((hueShift)*d) + 0.25*hue.rgb.r*(1 - hueShift*d), 1);
+				col.b =fmod(0.75*hue.rgb.b*((hueShift)*d) + 0.25*hue.rgb.g*(1 - hueShift*d),1);
 				//col.r = col.r*
 				//*/
 				//col.a = 1;
