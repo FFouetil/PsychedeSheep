@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a8fa7893a8dc145945530a80855b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateLinkedControllers: 1
   scaleMorpher: {fileID: 11465112}
   colorCycler: {fileID: 11410908}
   targetEntity: {fileID: 0}

@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 public class EffectController : MonoBehaviour {
+
+
+    protected static List<EffectController> fxControllers=new List<EffectController>(8);
+    public bool updateLinkedControllers=true;
+
 
     public ScaleMorpher scaleMorpher;
     public ColorCycler colorCycler;
@@ -25,7 +30,9 @@ public class EffectController : MonoBehaviour {
         if (!targetEntity)
             targetEntity = GameObject.FindObjectOfType<Sheep>().transform;
 
-	}
+        fxControllers.Add(this);
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,4 +44,23 @@ public class EffectController : MonoBehaviour {
         scaleMorpher.morphCycleDuration = Mathf.Lerp(1/nearEffectIntensity,1/farEffectIntensity, distRatio) * effectDistanceModifier;
 
 	}
+
+
+    void OnValidate()
+    {
+        if (updateLinkedControllers)
+        {
+            Debug.Log("Syncing EffectControllers");
+            foreach (EffectController fxc in fxControllers)
+            {
+                fxc.nearEffectIntensity = nearEffectIntensity;
+                fxc.farEffectIntensity = farEffectIntensity;
+                fxc.nearEffectDistance = nearEffectDistance;
+                fxc.farEffectDistance = farEffectDistance;
+                fxc.effectDistanceModifier = effectDistanceModifier;
+
+            }
+        }
+
+    }
 }
