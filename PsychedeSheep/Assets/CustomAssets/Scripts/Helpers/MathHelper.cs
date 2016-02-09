@@ -42,9 +42,10 @@ public static class MathHelper
         return Mathf.Pow(Mathf.SmoothStep(0, 1, ratio), (float)(pow));
 
     }
-    /// <summary>Smooth exponential fade</summary>
+    /// <summary>Smooth inverse exponential fade. Needs more testing!</summary>
     public static float SmoothExpFadeIn(float ratio, int pow)
     {
+        
         return Mathf.Pow(1-Mathf.SmoothStep(0,1, 1-ratio), (float)(pow));
     }
 
