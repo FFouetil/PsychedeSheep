@@ -37,15 +37,15 @@ public static class MathHelper
     }
 
     /// <summary>Smooth exponential fade</summary>
-    public static float SmoothExpFadeIn(float ratio, int pow)
+    public static float SmoothExpFadeOut(float ratio, int pow)
     {  
         return Mathf.Pow(Mathf.SmoothStep(0, 1, ratio), (float)(pow));
 
     }
     /// <summary>Smooth exponential fade</summary>
-    public static float SmoothExpFadeOut(float ratio, int pow)
+    public static float SmoothExpFadeIn(float ratio, int pow)
     {
-        return Mathf.Pow(Mathf.SmoothStep(1, 0, ratio), (float)(pow));
+        return Mathf.Pow(1-Mathf.SmoothStep(0,1, 1-ratio), (float)(pow));
     }
 
     public static float DeltaValueToLinearRatio(float min, float max, float value)

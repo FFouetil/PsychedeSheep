@@ -63,7 +63,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
         }
         else
         {
-            var smoothed = MathHelper.SmoothExpFadeIn(timerRatio,fadeSpeed);
+            var smoothed = MathHelper.SmoothExpFadeOut(timerRatio,fadeSpeed);
             var color = Color.Lerp(colorCycle[0], colorCycle[1], smoothed);
             r.material.color = color;
             color.a = selfIllumRatio;

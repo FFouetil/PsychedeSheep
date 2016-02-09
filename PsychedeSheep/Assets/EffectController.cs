@@ -8,7 +8,6 @@ public class EffectController : MonoBehaviour {
     protected static List<EffectController> fxControllers=new List<EffectController>(8);
     public bool updateLinkedControllers=true;
 
-
     public ScaleMorpher scaleMorpher;
     public ColorCycler colorCycler;
 

@@ -135,7 +135,7 @@ MonoBehaviour:
   - {r: 0.19999993, g: 1, b: 0, a: 0}
   selfIllumRatio: 0.507
   colorChangeDuration: 0.24
-  fadeSpeed: 32
+  fadeSpeed: 4
   linkedTimedModule: {fileID: 11465112}
   matchScaleBounceCycles: 1
 --- !u!114 &11437968
