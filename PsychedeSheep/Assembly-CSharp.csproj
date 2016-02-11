@@ -45,18 +45,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CustomAssets\Scripts\BaseGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\CameraExt.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ColorCycler.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\EffectController.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\GunShot.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Extensions.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Interfaces.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\MathHelper.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\MegasheepGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Projectile.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\PsychObject.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ScaleMorpher.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Sheep.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\VacuumGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Xplodium.cs" />
-     <Compile Include="Assets\EffectController.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

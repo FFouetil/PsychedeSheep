@@ -6,12 +6,13 @@ using System;
 [DisallowMultipleComponent]
 public class ColorCycler : MonoBehaviour, ITimed {
 
-
+    public Color CurrentColor { get; protected set; }
     public List<Color> colorCycle = new List<Color>(2);
     [Range(0, 1)]
-    public float selfIllumRatio=0.5f;
-    
+    public float selfIllumRatio=0.5f;    
     public float colorChangeDuration=1;
+    [Range(0, 10f)]
+    public float effectModifier = 1f;
 
     [Range(1,64)]
     public int fadeSpeed= 8;
@@ -21,7 +22,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
     protected float colorChangeTimer;
 
     protected Renderer r;
-
+    
     /// <summary>Returns color change cycle duration</summary>
     public float TimerDuration  { get {  return colorChangeDuration; } }
 
@@ -30,6 +31,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
         r = GetComponent<Renderer>();
         r.material.color=(colorCycle[0]);
         r.material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+        r.material.color= colorCycle[0] * selfIllumRatio;
         r.material.SetColor("_EmissionColor", colorCycle[0]* selfIllumRatio);
 
         //r.receiveShadows = false;
@@ -49,6 +51,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
 
         //set used duration to ScaleBounce duration if present and matching is enabled, else use local value
         float duration = (matchScaleBounceCycles && linkedTimedModule is ITimed) ? ((ITimed)linkedTimedModule).TimerDuration : colorChangeDuration;
+        //duration /= effectModifier;
         colorChangeTimer += Time.deltaTime;
 
         var timerRatio = colorChangeTimer / duration;
@@ -64,11 +67,13 @@ public class ColorCycler : MonoBehaviour, ITimed {
         else
         {
             var smoothed = MathHelper.SmoothExpFadeOut(timerRatio,fadeSpeed);
-            var color = Color.Lerp(colorCycle[0], colorCycle[1], smoothed);
+            var color = Color.Lerp(colorCycle[0], colorCycle[1], smoothed)* effectModifier;
             r.material.color = color;
             color.a = selfIllumRatio;
+            CurrentColor = color;
             //if (selfIllumRatio > 0)
-            r.material.SetColor("_EmissionColor", color* selfIllumRatio);
+            r.material.color = colorCycle[0] * selfIllumRatio* effectModifier;
+            r.material.SetColor("_EmissionColor", color* selfIllumRatio* effectModifier);
             
 
         }

@@ -1,19 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class MegasheepGun : MonoBehaviour {
+public class MegasheepGun : BaseGun {
 
 
     public float weaponChargeDuration;
     protected float weaponChargeTimer;
     protected float weaponChargeRatio;
-    protected ParticleSystem.MinMaxCurve[] emitterRates;
 
-    public Transform ProjectileSource;
-    public Projectile ProjectileType01;
-
-    public List<ParticleSystem> particleFx;
 	// Use this for initialization
 	void Start () {
         weaponChargeTimer = 0;

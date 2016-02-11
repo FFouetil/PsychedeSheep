@@ -49,24 +49,33 @@ public static class MathHelper
         return Mathf.Pow(1-Mathf.SmoothStep(0,1, 1-ratio), (float)(pow));
     }
 
-    public static float DeltaValueToLinearRatio(float min, float max, float value)
+    public static float ValueByDeltaToLinearRatio(float min, float max, float value)
     {
         //return a hard value or fear the mighty division by zero
         if (min == max)
-            return 1;
-        
-        /*
+            return float.NaN;
+
         if (min > max)
         {
             var t = min;
             min = max;
             max = t;
-        }*/
+        }
         
         var delta = Math.Abs(max - min);
         var offset = min;
         //min = 0; max -= offset; value -= offset;
-        return (value- min) / delta;
+        return (Mathf.Clamp(value,min, max) - min) / delta;
+    }
+
+    public static float AngleDegToNormal(float angleDeg)
+    {        
+        return Mathf.Cos(Mathf.Deg2Rad*angleDeg);
+    }
+
+    public static float AngleRadToNormal(float angleRad)
+    {
+        return Mathf.Cos(angleRad);
     }
 #else
         public static float PhaseNegPos(float ratio)

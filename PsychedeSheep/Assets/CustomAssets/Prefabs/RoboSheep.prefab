@@ -18,6 +18,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &102032
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 498600}
+  - 135: {fileID: 13541398}
+  m_Layer: 0
+  m_Name: Vacuum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &103486
 GameObject:
   m_ObjectHideFlags: 1
@@ -99,6 +115,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426776}
   - 114: {fileID: 11449554}
+  - 114: {fileID: 11481058}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -235,6 +252,7 @@ GameObject:
   - 75: {fileID: 7510678}
   - 114: {fileID: 11419490}
   - 65: {fileID: 6530602}
+  - 114: {fileID: 11453236}
   m_Layer: 0
   m_Name: RoboSheep
   m_TagString: Untagged
@@ -274,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &153712
 GameObject:
   m_ObjectHideFlags: 1
@@ -373,6 +391,21 @@ GameObject:
   - 23: {fileID: 2368776}
   m_Layer: 0
   m_Name: SphereL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &173392
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 462292}
+  m_Layer: 0
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,8 +813,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
-  - {fileID: 491700}
-  - {fileID: 468816}
+  - {fileID: 498600}
+  - {fileID: 462292}
   m_Father: {fileID: 401218}
   m_RootOrder: 0
 --- !u!4 &461538
@@ -810,6 +843,20 @@ Transform:
   - {fileID: 405106}
   m_Father: {fileID: 489230}
   m_RootOrder: 0
+--- !u!4 &462292
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173392}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 491700}
+  - {fileID: 468816}
+  m_Father: {fileID: 459174}
+  m_RootOrder: 1
 --- !u!4 &462924
 Transform:
   m_ObjectHideFlags: 1
@@ -886,10 +933,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 129172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 459174}
+  m_Father: {fileID: 462292}
   m_RootOrder: 1
 --- !u!4 &475050
 Transform:
@@ -991,10 +1038,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 459174}
+  m_Father: {fileID: 462292}
   m_RootOrder: 0
 --- !u!4 &491796
 Transform:
@@ -1032,6 +1079,18 @@ Transform:
   m_Children:
   - {fileID: 464022}
   m_Father: {fileID: 454118}
+  m_RootOrder: 0
+--- !u!4 &498600
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459174}
   m_RootOrder: 0
 --- !u!20 &2065940
 Camera:
@@ -1834,17 +1893,32 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114212}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a13ef3df9ea64ce4ba9b3f1c144cbcd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponChargeDuration: 1.5
   ProjectileSource: {fileID: 459174}
   ProjectileType01: {fileID: 11411862, guid: d1d26b4e8c8ef194aaae80f5daeee21d, type: 2}
   particleFx:
   - {fileID: 19891666}
   - {fileID: 19849818}
+  weaponChargeDuration: 1.5
+--- !u!114 &11453236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61aad2c614d143469ccf11de9fb1a9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  morphingMode: 0
+  morphCycleDuration: 1
+  morphHorizontalRatio: 0.1
+  morphVerticalRatio: 0.1
 --- !u!114 &11467848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1864,6 +1938,23 @@ MonoBehaviour:
   heightDensity: 7.6
   startDistance: 0
   fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
+--- !u!114 &11481058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dadcc3f02e4a384cb3cb912a151f91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectileSource: {fileID: 459174}
+  ProjectileType01: {fileID: 0}
+  particleFx: []
+  aspirationPower: 100
+  isAspiring: 1
+  maxRange: 1
 --- !u!124 &12465470
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1882,6 +1973,18 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13541398
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102032}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13546038
 SphereCollider:
@@ -2106,7 +2209,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154148}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -5126,7 +5229,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   scalingMode: 1
   InitialModule:
@@ -6615,7 +6718,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   scalingMode: 1
   InitialModule:

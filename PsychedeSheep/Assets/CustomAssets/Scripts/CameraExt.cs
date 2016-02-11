@@ -32,10 +32,11 @@ public class CameraExt : MonoBehaviour {
             // Measure the new distance and readjust the FOV accordingly.
             var currDistance = Vector3.Distance(transform.position, target.position);
             cam.fieldOfView = FOVForHeightAndDistance(initHeightAtDist, currDistance);
+            // Simple control to allow the camera to be moved in and out using the up/down arrows.
+            transform.Translate(Input.GetAxis("Vertical") * Vector3.forward * Time.deltaTime * 20f);
         }
 
-        // Simple control to allow the camera to be moved in and out using the up/down arrows.
-        transform.Translate(Input.GetAxis("Vertical") * Vector3.forward * Time.deltaTime * 20f);
+
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
