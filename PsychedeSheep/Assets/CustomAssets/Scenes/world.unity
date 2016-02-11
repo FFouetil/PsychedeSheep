@@ -5293,6 +5293,7 @@ MonoBehaviour:
   fxMaterial: {fileID: 2100000, guid: 5bf9d603dd2ced547808ba85d93906b6, type: 2}
   enablePostProcess: 0
   autoAdjustClippingPlanes: 0
+  dzEnabled: 0
 --- !u!81 &1494864289
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5332,7 +5333,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1200
-  field of view: 60.000004
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -7609,7 +7610,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453726, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11401174, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
       propertyPath: targetEntity
@@ -7619,18 +7620,6 @@ Prefab:
       propertyPath: explosionFxPrefab
       value: 
       objectReference: {fileID: 641357416}
-    - target: {fileID: 19896158, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
-      propertyPath: InitialModule.gravityModifier
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896158, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
-      propertyPath: ShapeModule.m_UseMeshColors
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11410908, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
-      propertyPath: selfIllumRatio
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 52ebd7cef3f16ce45843852b2163d28c, type: 2}
   m_IsPrefabParent: 0

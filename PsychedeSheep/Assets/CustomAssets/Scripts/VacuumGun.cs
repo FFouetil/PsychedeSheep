@@ -167,7 +167,7 @@ public class VacuumGun : BaseGun
                 }
                 else
                 {
-                    p[i].size *= 0.8f;
+                    p[i].startSize *= 0.8f;
                 }
 
 

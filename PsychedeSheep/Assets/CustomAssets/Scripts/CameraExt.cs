@@ -13,13 +13,13 @@ public class CameraExt : MonoBehaviour {
 
 
     private float initHeightAtDist;
-    private bool dzEnabled;
+    public bool dzEnabled;
 
 
     // Use this for initialization
     void Start () {
         cam.depthTextureMode = DepthTextureMode.Depth;
-        StartDZ();
+        //StartDZ();
     }
 	
 	// Update is called once per frame
