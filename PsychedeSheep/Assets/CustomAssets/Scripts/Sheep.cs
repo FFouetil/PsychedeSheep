@@ -12,6 +12,8 @@ public class Sheep : MonoBehaviour {
 	public float TimeToFullspeed=5;
 	protected float pressDuration;
 	protected float lastRefForce;
+
+    public bool canMove;
 	// Use this for initialization
 	void Start () {
 		rigid=GetComponent<Rigidbody>();
@@ -25,7 +27,20 @@ public class Sheep : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		rigid.drag=0;
-		if ( Input.GetButtonDown("Fly")){
+
+        var v = Input.GetAxis("Vertical");
+        var h = Input.GetAxis("Horizontal");
+        var translateMod = 10f;
+        var rY = Input.GetAxis("Horizontal2");
+        var rotateMod = 10f*10f;
+
+        if ( canMove )
+        {
+            transform.position += (rigid.transform.forward * Time.fixedDeltaTime * v * translateMod) + rigid.transform.right * Time.fixedDeltaTime * h * translateMod;
+            transform.Rotate(new Vector3(0, rY * Time.fixedDeltaTime * rotateMod, 0));
+        }
+
+        if ( Input.GetButtonDown("Fly")){
 
 			//rigid.AddForce(0,300,0);
 			lastRefForce=JetPack.relativeForce.y;

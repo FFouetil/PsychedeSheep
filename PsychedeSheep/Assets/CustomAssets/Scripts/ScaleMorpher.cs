@@ -23,6 +23,8 @@ public class ScaleMorpher : MonoBehaviour, ITimed {
     public float morphHorizontalRatio = 0.1f;
 	[Range(-0.95f, 0.95f)]
     public float morphVerticalRatio = -0.2f;
+    [Range(0.1f, 10f)]
+    public float globalScaleModifier = 1f;
 
     Vector3 originalScale;
 	float sign=1;
@@ -44,7 +46,7 @@ public class ScaleMorpher : MonoBehaviour, ITimed {
         transform.localScale = new Vector3(
             originalScale.x+ originalScale.x*timerPhase * morphHorizontalRatio,
             originalScale.y+ originalScale.y*timerPhase * morphVerticalRatio,
-            originalScale.z + originalScale.z*timerPhase * morphHorizontalRatio); 
+            originalScale.z + originalScale.z*timerPhase * morphHorizontalRatio)*globalScaleModifier; 
 
     }
 

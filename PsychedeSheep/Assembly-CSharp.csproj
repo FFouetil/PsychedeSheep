@@ -49,6 +49,7 @@
      <Compile Include="Assets\CustomAssets\Scripts\CameraExt.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ColorCycler.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\EffectController.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\Generic\Structures.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\GunShot.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Extensions.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Interfaces.cs" />

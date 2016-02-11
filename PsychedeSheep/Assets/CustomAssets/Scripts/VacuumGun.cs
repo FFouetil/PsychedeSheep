@@ -5,6 +5,19 @@ using System.Collections.Generic;
 
 public class VacuumGun : BaseGun
 {
+    public enum AspirationStatus
+    {
+        Stopped,
+        PoweringUp,
+        PoweringDown,
+        FullyPowerd,
+    }
+    public AspirationStatus aspirationStatus= AspirationStatus.Stopped;
+
+    //
+    //Attributes
+    //
+
     public SphereCollider col;
 
     [Header("Aspiration settings")]
@@ -14,9 +27,13 @@ public class VacuumGun : BaseGun
     protected float coneAngleDeg = 90; 
     public bool isAspiring;
     ///<summary>Half-angle of the cone</summary>
-    public float NormalAngleDeg { get { return coneAngleDeg / 2; } set { coneAngleDeg = Mathf.Clamp(value * 2, 0, 359.99f); } }
+    public float LateralAngleDeg { get { return coneAngleDeg / 2; } set { coneAngleDeg = Mathf.Clamp(value * 2, 0, 359.99f); } }
     ///<summary>Normal of the maximum cone angle</summary>
-    public float EffectiveNormal { get { return MathHelper.AngleDegToNormal(NormalAngleDeg); } }
+    public float EffectiveNormal { get { return MathHelper.AngleDegToNormal(LateralAngleDeg); } }
+    public float storageLimit=1000;
+    [SerializeField]
+    protected float bs_storageLevel;
+    public float StorageLevel { get { return bs_storageLevel; } set { bs_storageLevel = Mathf.Clamp(value,0,storageLimit); } } 
 
     [Space]
     protected List<ParticleSystem> fxPartSystems;
@@ -32,9 +49,10 @@ public class VacuumGun : BaseGun
     }
     void Start()
     {
+        bs_storageLevel = storageLimit;
         if (col)
         {
-            col.radius = maxRange * 15f;
+            col.radius = maxRange * 20f;
             col.isTrigger = true;
             col.enabled = true;
 
@@ -48,6 +66,7 @@ public class VacuumGun : BaseGun
         //fire 2 is aspiration key
         if (Input.GetButtonDown("Fire2"))
         {
+            aspirationStatus = AspirationStatus.PoweringUp;
             isAspiring = true;
             Debug.Log("Pressing Fire2");
             PlayAspirationParticles();
@@ -60,6 +79,7 @@ public class VacuumGun : BaseGun
         }
         else if (Input.GetButtonUp("Fire2"))
         {
+            aspirationStatus = AspirationStatus.PoweringDown;
             isAspiring = false;
             Debug.Log("Releasing Fire2");
             StopAspirationParticles();
@@ -117,10 +137,19 @@ public class VacuumGun : BaseGun
 
     void AspiratePsychObj(PsychObject psychObj)
     {
+        var dist = Vector3.Distance(psychObj.transform.position.normalized, col.transform.position.normalized);
+        var angularPower = MathHelper.ValueByDeltaToLinearRatio(
+                EffectiveNormal, 1f,
+                Vector3.Dot(
+                    transform.forward.normalized, (transform.position - psychObj.transform.position).normalized));
         //Debug.Log("AspiratePsychObj " + psychObj.name);
-        psychObj.currentLife-= Time.deltaTime*aspirationPower * MathHelper.ValueByDeltaToLinearRatio(
-            EffectiveNormal, 1f,
-            Vector3.Dot(transform.forward.normalized, (transform.position-psychObj.transform.position).normalized));
+        var absorbedLife= Time.deltaTime
+            * GetPowerAtRange(dist)
+            * angularPower;
+        psychObj.currentLife -= absorbedLife;
+
+        StorageLevel += absorbedLife;
+
         psychObj.currentLife = Mathf.Max(0, psychObj.currentLife);
         psychObj.fxController.intensityModifier = psychObj.LifeRatio;
     }
@@ -147,28 +176,34 @@ public class VacuumGun : BaseGun
             //Debug.Log("Collision Stay Vac with " + other.name + " - Nb Particles: " + np);
             for (int i = 0; i < np; i++)
             {
+                var vel = p[i].velocity;
                 if (i%4 != 0)
                 {
-
+                    
                     //  p[i].
-                    var distP = Vector3.Distance(p[i].position, transform.position);
-                    var dirNormal = Vector3.Dot(col.transform.forward.normalized, (transform.position - p[i].position).normalized);
+                    var distP = Vector3.Distance(p[i].position.normalized, col.transform.position.normalized);
+                    var dirNormal = Vector3.Dot(col.transform.forward.normalized, (col.transform.position - p[i].position).normalized);
                     var angleRatio = MathHelper.ValueByDeltaToLinearRatio(EffectiveNormal, 1f, dirNormal);
+                    var distRatio=GetPowerAtRange(distP);
+                    var effectRatio = angleRatio * distRatio;
+
+                    /*if (i == 1)
+                        Debug.Log("distP: " + distP);*/
 
                     p[i].position = Vector3.MoveTowards(
-                        p[i].position, col.transform.position, angleRatio * Time.deltaTime * GetPowerAtRange(
-                            distP));
-                    var vel = p[i].velocity;
-                    vel.x *= 0.9f;
-                    vel.z *= 0.9f;
-                    vel.y += Physics.gravity.y * 0.005f;
+                        p[i].position, col.transform.position, effectRatio * Time.deltaTime);
+                    
+                    vel.x *= 0.7f;
+                    vel.z *= 0.7f;
+                    vel.y = Physics.gravity.y * Mathf.Clamp01(1- effectRatio) * Time.deltaTime;
                     p[i].velocity = vel;// + (Physics.gravity*0.05f);
-                                                         // p[i].lifetime = Mathf.SmoothStep(p[i].startLifetime,1f,distP/maxRange);
+                   // p[i].lifetime = Mathf.SmoothStep(p[i].startLifetime,1f,1f- distRatio);
                 }
-                else
+                /*else
                 {
+                    vel.y += Physics.gravity.y * 0.005f;
                     p[i].startSize *= 0.8f;
-                }
+                }*/
 
 
                 /*
@@ -186,7 +221,7 @@ public class VacuumGun : BaseGun
 
     public float GetPowerAtRange(float distance)
     {
-        return Mathf.Lerp(aspirationPower, aspirationPower * 0.1f, distance / maxRange);
+        return Mathf.SmoothStep(aspirationPower, 0f, distance / maxRange);
     }
 
     void OnTriggerStay(Collider other)
