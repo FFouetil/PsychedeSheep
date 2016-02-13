@@ -26,15 +26,23 @@ public class VacuumGun : BaseGun
     [Range(0,359.99f),SerializeField]
     protected float coneAngleDeg = 90; 
     public bool isAspiring;
+    public bool isBlowing;
     ///<summary>Half-angle of the cone</summary>
     public float LateralAngleDeg { get { return coneAngleDeg / 2; } set { coneAngleDeg = Mathf.Clamp(value * 2, 0, 359.99f); } }
     ///<summary>Normal of the maximum cone angle</summary>
     public float EffectiveNormal { get { return MathHelper.AngleDegToNormal(LateralAngleDeg); } }
+
+    [Header("Blow settings")]
     public float storageLimit=1000;
     [SerializeField]
     protected float bs_storageLevel;
-    public float StorageLevel { get { return bs_storageLevel; } set { bs_storageLevel = Mathf.Clamp(value,0,storageLimit); } } 
+    public float StorageLevel { get { return bs_storageLevel; } set { bs_storageLevel = Mathf.Clamp(value,0,storageLimit); } }
+    [SerializeField]
+    public List<ParticleSystem.Particle> storedParticles;
+    public ParticleSystem blowFxMain;
 
+
+    //cached stuff
     [Space]
     protected List<ParticleSystem> fxPartSystems;
     protected ParticleSystem.Particle[] p = new ParticleSystem.Particle[2500];
@@ -42,14 +50,14 @@ public class VacuumGun : BaseGun
     // Use this for initialization
     void Awake()
     {
-        
+        storedParticles = new List<ParticleSystem.Particle>((int)(storageLimit * 100));
         col = GetComponentInChildren<SphereCollider>();
         if (col)
             col.isTrigger = false;
     }
     void Start()
     {
-        bs_storageLevel = storageLimit;
+        bs_storageLevel = 0;
         if (col)
         {
             col.radius = maxRange * 20f;
@@ -89,20 +97,23 @@ public class VacuumGun : BaseGun
         //fire 1 is shoot key
         else if (Input.GetButtonDown("Fire1"))
         {
-
+            isBlowing = true;
+            blowFxMain.Play();
             Debug.Log("Pressing Fire1");
             PlayAspirationParticles();
         }
         else if (Input.GetButton("Fire1"))
         {
-
+            Fire();
             Debug.Log("Holding Fire1");
             //Aspirate();
         }
         else if (Input.GetButtonUp("Fire1"))
         {
+            isBlowing = false;
+            blowFxMain.Stop();
             Debug.Log("Releasing Fire1");
-            Fire();
+
         }
         
     }
@@ -110,12 +121,41 @@ public class VacuumGun : BaseGun
 
     void Fire()
     {
-        throw new NotImplementedException();
+        blowFxMain.Pause();
+        if (storedParticles.Count > 0)
+        {
+            int bunchSize = Mathf.Min(4, storedParticles.Count);            
+
+            var nextParticles = storedParticles.GetRange(0, bunchSize);
+            float size=0, life=0;
+            Vector4 color = new Vector4(0,0,0,0);
+
+            foreach (ParticleSystem.Particle p in nextParticles)
+            {
+                size += p.startSize;
+                life += p.startLifetime;
+                var c = (Color)p.startColor;
+                color += new Vector4(c.r, c.g, c.b, c.a);    
+            }
+
+            blowFxMain.startSize = size/bunchSize;
+            blowFxMain.startLifetime = life/bunchSize;
+            blowFxMain.startColor =  color / bunchSize;
+            
+            storedParticles.RemoveRange(0,bunchSize);
+        }
+        else
+        {
+            blowFxMain.startColor = Color.gray/5;
+        }
+        bs_storageLevel = storedParticles.Count;
+        blowFxMain.Play();
+
     }
 
     void StopAspirationParticles()
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("StopAspirationParticles");
     }
 
     void Aspirate(Collider other)
@@ -177,27 +217,36 @@ public class VacuumGun : BaseGun
             for (int i = 0; i < np; i++)
             {
                 var vel = p[i].velocity;
-                if (i%4 != 0)
+                if (i%2 == 0)
                 {
                     
-                    //  p[i].
+                    //calculate the effectiveness of aspiration according to distance and angle
                     var distP = Vector3.Distance(p[i].position.normalized, col.transform.position.normalized);
                     var dirNormal = Vector3.Dot(col.transform.forward.normalized, (col.transform.position - p[i].position).normalized);
                     var angleRatio = MathHelper.ValueByDeltaToLinearRatio(EffectiveNormal, 1f, dirNormal);
                     var distRatio=GetPowerAtRange(distP);
-                    var effectRatio = angleRatio * distRatio;
+                    var effectRatio = angleRatio* angleRatio * distRatio;
 
-                    /*if (i == 1)
-                        Debug.Log("distP: " + distP);*/
+                    //store every Nth particle if close to the gun
+                    if (distP < 0.15f && i % 10 == 0)
+                    {
+                        StoreParticle(p[i]);
+                        p[i]=new ParticleSystem.Particle();
+                    }
+                    else //aspire it toward the gun and add some gravity/momentum
+                    {
+                        /*if (i == 1)
+                            Debug.Log("distP: " + distP);*/
 
-                    p[i].position = Vector3.MoveTowards(
-                        p[i].position, col.transform.position, effectRatio * Time.deltaTime);
-                    
-                    vel.x *= 0.7f;
-                    vel.z *= 0.7f;
-                    vel.y = Physics.gravity.y * Mathf.Clamp01(1- effectRatio) * Time.deltaTime;
-                    p[i].velocity = vel;// + (Physics.gravity*0.05f);
-                   // p[i].lifetime = Mathf.SmoothStep(p[i].startLifetime,1f,1f- distRatio);
+                        p[i].position = Vector3.MoveTowards(
+                            p[i].position, col.transform.position, effectRatio * Time.deltaTime);
+
+                        vel.x = (col.transform.position.x- p[i].position.x) * Time.deltaTime * p[i].startSize*15;
+                        vel.z = (col.transform.position.z- p[i].position.z ) * Time.deltaTime*p[i].startSize*15;
+                        vel.y = Physics.gravity.y * Mathf.Clamp01(1 - effectRatio) * Time.deltaTime;
+                        p[i].velocity = vel;
+                    }
+
                 }
                 /*else
                 {
@@ -214,9 +263,18 @@ public class VacuumGun : BaseGun
         }
     }
 
+    private void StoreParticle(ParticleSystem.Particle particle)
+    {
+        //Debug.Log("Storing particule in Vacuum");
+        
+        storedParticles.Add(particle);
+        bs_storageLevel = storedParticles.Count;
+    }
+
+
     void PlayAspirationParticles()
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("PlayAspirationParticles");
     }
 
     public float GetPowerAtRange(float distance)

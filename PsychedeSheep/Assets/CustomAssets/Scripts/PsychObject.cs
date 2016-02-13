@@ -8,7 +8,7 @@ public class PsychObject : MonoBehaviour {
 
     public float defaultLife=100;
     public float currentLife;
-    public float overlifeLimitRatio = 1.5f;
+    public float overlifeLimitRatio = 3f;
 
     public float LifeRatio { get { return currentLife/defaultLife; } }
     public float OverLifeRatio { get { return (currentLife / overlifeLimitRatio); } }
@@ -19,21 +19,51 @@ public class PsychObject : MonoBehaviour {
         fxController = GetComponent<EffectController>();
         currentLife = defaultLife;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         //test.
-        float scale=1f;
-        if (LifeRatio > 1)
+        float scale = 1f;
+        //if life is below max ratio
+        if (LifeRatio < overlifeLimitRatio)
         {
-            scale = Mathf.SmoothStep(1f, overlifeLimitRatio, OverLifeRatio);
+            if (LifeRatio <= 1f)
+                scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
+            else
+                scale *= LifeRatio * LifeRatio;// Mathf.LerpUnclamped(1f, 1f, LifeRatio);
+
+            foreach (ParticleSystem ps in fxController.partSystems)
+            {
+                ps.startSize = scale;
+            }
+
+
+            fxController.scaleMorpher.globalScaleModifier = scale;
+
         }
-        else
+        else //if light is over max ratio
         {
-            scale = Mathf.SmoothStep(0.5f, 1f, LifeRatio);
+            //scale = 0.1f;//MathHelper.EaseOut(LifeRatio, LifeRatio, LifeRatio);
+
+            //blow it up
+            foreach (ParticleSystem ps in fxController.partSystems)
+            {
+                ps.transform.SetParent(null);
+                ps.startSize = LifeRatio * LifeRatio;
+                ps.startSpeed *= 10 * LifeRatio;
+                ps.startLifetime *= 0.75f;
+                ps.loop = false;
+                
+                ps.Emit(1000);
+                Destroy(ps.gameObject, ps.startLifetime*2);
+                //ps.Play();
+            }
+            DestroyObject(this.gameObject);
+
         }
-        
-        fxController.scaleMorpher.globalScaleModifier = scale;
+
+
     }
 
     void OnValidate()
