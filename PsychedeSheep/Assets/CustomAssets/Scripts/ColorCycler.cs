@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[DisallowMultipleComponent]
+[DisallowMultipleComponent,ExecuteInEditMode]
 public class ColorCycler : MonoBehaviour, ITimed {
 
     public Color CurrentColor { get; protected set; }
@@ -21,7 +21,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
     public MonoBehaviour linkedTimedModule;
     [SerializeField]
     public bool matchScaleBounceCycles;    
-    protected float colorChangeTimer;
+    protected float colorChangeTimer=0;
 
     protected Renderer r;
     
@@ -41,12 +41,12 @@ public class ColorCycler : MonoBehaviour, ITimed {
         }*/
         if (!r)
             r = GetComponent<Renderer>();
-        r.material.color=(colorCycle[0]);
-        r.material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+        r.sharedMaterial.color=(colorCycle[0]);
+        r.sharedMaterial.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
         //r.material.color= colorCycle[0] * selfIllumRatio;
-        r.material.SetColor("_Albedo", colorCycle[0]);
-        r.material.SetColor("_EmissionColor", colorCycle[0]);
-        r.material.SetFloat("_EmissionLM", 0.357f);
+        r.sharedMaterial.SetColor("_Albedo", colorCycle[0]);
+        r.sharedMaterial.SetColor("_EmissionColor", colorCycle[0]);
+        r.sharedMaterial.SetFloat("_EmissionLM", 0.357f);
         //r.receiveShadows = false;
 
         if (linkedTimedModule != null)
