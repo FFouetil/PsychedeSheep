@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Candlelight;
 
 public class VacuumGun : BaseGun
 {
@@ -34,9 +35,9 @@ public class VacuumGun : BaseGun
 
     [Header("Blow settings")]
     public float storageLimit=1000;
-    [SerializeField]
-    protected float bs_storageLevel;
-    public float StorageLevel { get { return bs_storageLevel; } set { bs_storageLevel = Mathf.Clamp(value,0,storageLimit); } }
+    [SerializeField,PropertyBackingField("StorageLevel")]
+    private float _storageLevel;
+    public float StorageLevel { get { return _storageLevel; } set { _storageLevel = Mathf.Clamp(value,0,storageLimit); } }
     [SerializeField]
     public List<ParticleSystem.Particle> storedParticles;
     public ParticleSystem blowFxMain;
@@ -57,7 +58,7 @@ public class VacuumGun : BaseGun
     }
     void Start()
     {
-        bs_storageLevel = 0;
+        _storageLevel = 0;
         if (col)
         {
             col.radius = maxRange * 20f;
@@ -82,7 +83,7 @@ public class VacuumGun : BaseGun
         else if (Input.GetButton("Fire2"))
         {
 
-            Debug.Log("Holding Fire2");
+            //Debug.Log("Holding Fire2");
             //Aspirate();
         }
         else if (Input.GetButtonUp("Fire2"))
@@ -91,7 +92,7 @@ public class VacuumGun : BaseGun
             isAspiring = false;
             Debug.Log("Releasing Fire2");
             StopAspirationParticles();
-            Fire();
+            //Fire();
         }
 
         //fire 1 is shoot key
@@ -104,8 +105,8 @@ public class VacuumGun : BaseGun
         }
         else if (Input.GetButton("Fire1"))
         {
-            Fire();
-            Debug.Log("Holding Fire1");
+            
+            //Debug.Log("Holding Fire1");
             //Aspirate();
         }
         else if (Input.GetButtonUp("Fire1"))
@@ -115,7 +116,10 @@ public class VacuumGun : BaseGun
             Debug.Log("Releasing Fire1");
 
         }
-        
+
+        if (isBlowing)
+            Fire();
+
     }
 
 
@@ -148,7 +152,7 @@ public class VacuumGun : BaseGun
         {
             blowFxMain.startColor = Color.gray/5;
         }
-        bs_storageLevel = storedParticles.Count;
+        _storageLevel = storedParticles.Count;
         blowFxMain.Play();
 
     }
@@ -268,7 +272,7 @@ public class VacuumGun : BaseGun
         //Debug.Log("Storing particule in Vacuum");
         
         storedParticles.Add(particle);
-        bs_storageLevel = storedParticles.Count;
+        _storageLevel = storedParticles.Count;
     }
 
 

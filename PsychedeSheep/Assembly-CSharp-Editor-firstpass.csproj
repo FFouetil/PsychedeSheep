@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{A49CBB67-48CC-92E7-7633-E2A5AC29C326}</ProjectGuid>
+    <ProjectGuid>{5D915723-549B-AECD-5E61-40D5177812C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -45,23 +45,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CustomAssets\Scripts\BaseGun.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\CameraExt.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\ColorCycler.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\EffectController.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Generic\Structures.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\GunShot.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Helpers\Extensions.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Helpers\Interfaces.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Helpers\MathHelper.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\MegasheepGun.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\ParticleFxManager.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Projectile.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\PsychObject.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\ScaleMorpher.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Sheep.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\VacuumGun.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Xplodium.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Asset Store Products\Property Backing Field Drawer\Examples\Scripts\Editor\ArrayPropertySetterExampleEditor.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Asset Store Products\Property Backing Field Drawer\Examples\Scripts\Editor\ConcreteSubclassPropertySetterExampleEditor.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Asset Store Products\Property Backing Field Drawer\Examples\Scripts\Editor\CustomClassPropertySetterExampleEditor.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Asset Store Products\Property Backing Field Drawer\Examples\Scripts\Editor\GenericBaseClassPropertySetterExampleEditor.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\GUI\EditorGUIXRedistributable.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\GUI\EditorStylesX.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Preferences\Editor Preferences\EditorPreference.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Preferences\Editor Preferences\EditorPreferenceMenu.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Property Drawers\EulerAnglesDrawer.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Property Drawers\PropertyBackingFieldDrawer.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Utilities\EditorUtilityX.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Utilities\ReflectionX.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Utilities\SerializedPropertyX.cs" />
+     <Compile Include="Assets\Plugins\Candlelight\Library\Editor\Utilities\UnityFeatureDefineSymbols.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
@@ -155,11 +152,32 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.EditorTestsRunner">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/UnityEditor.EditorTestsRunner.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Networking">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TreeEditor">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>D:/Softs/SDK/Unity_Editor_5/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

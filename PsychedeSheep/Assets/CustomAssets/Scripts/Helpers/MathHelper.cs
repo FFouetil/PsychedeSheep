@@ -12,6 +12,17 @@ public static class MathHelper
 {
     public static readonly float Deg2Rad = 0.0174532924f;
     public static readonly float Rad2Deg = 57.29578f;
+    
+    public static float Clamp(float min, float max, float value)
+    {
+        return (value < min) ? min : (value > max) ? max : value;
+    }
+
+    public static float Lerp(float a, float b, float t)
+    {
+        t = Clamp(0, 1, t);
+        return (1 - t) * a + t * b;
+    }
 
 #if _ || UNITY_EDITOR || UNITY_STANDALONE
     /// <summary>Similar to smoothstep, but smoother at extremities and steeper slope</summary>
@@ -33,13 +44,13 @@ public static class MathHelper
     }
 
     /// <summary>Bounce effect, 0->1->0 pattern</summary>
-    public static float Bounce(float ratio)
+    public static float BounceNegative(float ratio)
     {
         return Mathf.Sin(ratio * Mathf.PI + Mathf.PI);
     }
 
     /// <summary>Bounce effect, 0->-1->0 pattern</summary>
-    public static float ReverseBounce(float ratio)
+    public static float BouncePositive(float ratio)
     {
         return Mathf.Sin(ratio * Mathf.PI);
     }
@@ -105,18 +116,6 @@ public static class MathHelper
     }
 #else
 
-
-
-    public static float Clamp(float min, float max, float value)
-    {
-        return (value < min) ? min : (value > max) ? max : value;
-    }
-
-    public static float Lerp(float a, float b, float t)
-    {
-        t = Clamp(0, 1, t);
-        return (1 - t) * a + t * b;
-    }
 
     public static float LerpUnclamped(float a, float b, float t)
     {

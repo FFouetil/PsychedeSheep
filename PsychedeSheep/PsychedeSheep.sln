@@ -5,6 +5,8 @@ Project("{1161842C-13B0-443D-E647-1913B14A30B1}") = "PsychedeSheep", "Assembly-C
 EndProject
 Project("{1161842C-13B0-443D-E647-1913B14A30B1}") = "PsychedeSheep", "Assembly-CSharp.csproj", "{A49CBB67-48CC-92E7-7633-E2A5AC29C326}"
 EndProject
+Project("{1161842C-13B0-443D-E647-1913B14A30B1}") = "PsychedeSheep", "Assembly-CSharp-Editor-firstpass.csproj", "{5D915723-549B-AECD-5E61-40D5177812C3}"
+EndProject
 Project("{1161842C-13B0-443D-E647-1913B14A30B1}") = "PsychedeSheep", "Assembly-CSharp-Editor.csproj", "{BC29B4EC-2F73-D347-7E7E-A862DE319AE0}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{A49CBB67-48CC-92E7-7633-E2A5AC29C326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A49CBB67-48CC-92E7-7633-E2A5AC29C326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A49CBB67-48CC-92E7-7633-E2A5AC29C326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D915723-549B-AECD-5E61-40D5177812C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D915723-549B-AECD-5E61-40D5177812C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D915723-549B-AECD-5E61-40D5177812C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D915723-549B-AECD-5E61-40D5177812C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC29B4EC-2F73-D347-7E7E-A862DE319AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC29B4EC-2F73-D347-7E7E-A862DE319AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC29B4EC-2F73-D347-7E7E-A862DE319AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU

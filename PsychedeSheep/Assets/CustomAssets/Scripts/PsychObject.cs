@@ -86,6 +86,7 @@ public class PsychObject : MonoBehaviour {
         if (other && !fxController.partSystems.Contains(other.GetComponentInChildren<ParticleSystem>()) )
         {
             Debug.Log("PsychObj Received particle from " + other.name);
+            Debug.LogWarning("Doesn't filter particles from other objects yet!");
             currentLife += 1f;
             fxController.intensityModifier = LifeRatio;
             /*var vac = other.transform.parent.parent.parent.GetComponentInChildren<VacuumGun>();
