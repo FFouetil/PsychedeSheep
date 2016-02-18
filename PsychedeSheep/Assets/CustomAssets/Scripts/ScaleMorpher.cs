@@ -54,9 +54,9 @@ public class ScaleMorpher : MonoBehaviour, ITimed {
 		float timerRatio = morphCycleTimer / morphCycleDuration;
 
 		switch (mode){
-		case MorphingMode.Phase:return MathHelper.PhaseNegPos(timerRatio);
-		case MorphingMode.NormalBounce:return MathHelper.BounceNegative(timerRatio);
-		case MorphingMode.ReverseBounce:return MathHelper.BouncePositive(timerRatio);
+		case MorphingMode.Phase:return MathEx.PhaseNegPos(timerRatio);
+		case MorphingMode.NormalBounce:return MathEx.BounceNegative(timerRatio);
+		case MorphingMode.ReverseBounce:return MathEx.BouncePositive(timerRatio);
 		//case MorphingMode.Linear:return Mathf.Lerp((sign=Mathf.Sign(0.999f-timerRatio)),-sign,timerRatio);
 		//case MorphingMode.SmoothedLinear:return Mathf.SmoothStep(0*sign,1*sign,timerRatio);
 		default: return 1;

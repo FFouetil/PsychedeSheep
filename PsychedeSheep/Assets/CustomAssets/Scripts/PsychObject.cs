@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(EffectController), typeof(ColorCycler))]
 public class PsychObject : MonoBehaviour {
@@ -13,11 +13,14 @@ public class PsychObject : MonoBehaviour {
     public float LifeRatio { get { return currentLife/defaultLife; } }
     public float OverLifeRatio { get { return (currentLife / overlifeLimitRatio); } }
 
+    protected Dictionary<GameObject,bool> particleSrcFilter = new Dictionary<GameObject, bool>(64);
+
     // Use this for initialization
     void Start () {
         //GetComponentInChildren<()
         fxController = GetComponent<EffectController>();
         currentLife = defaultLife;
+        InitParticleFilter();
     }
 
     // Update is called once per frame
@@ -47,23 +50,46 @@ public class PsychObject : MonoBehaviour {
             //scale = 0.1f;//MathHelper.EaseOut(LifeRatio, LifeRatio, LifeRatio);
 
             //blow it up
-            foreach (ParticleSystem ps in fxController.partSystems)
-            {
-                ps.transform.SetParent(null);
-                ps.startSize = LifeRatio * LifeRatio;
-                ps.startSpeed *= 10 * LifeRatio;
-                ps.startLifetime *= 0.75f;
-                ps.loop = false;
-                
-                ps.Emit(1000);
-                Destroy(ps.gameObject, ps.startLifetime*2);
-                //ps.Play();
-            }
-            DestroyObject(this.gameObject);
+            PlayBlowParticles();
+
 
         }
 
 
+    }
+
+    public void PlayBlowParticles()
+    {
+        var scale = 1f;
+        foreach (ParticleSystem ps in fxController.partSystems)
+        {
+            ps.transform.SetParent(null);
+            ps.loop = false;
+
+            int nbParts= 3000;
+            int nbBatchs = 10;
+            ps.maxParticles = nbParts / (int)scale;
+            for (float i=1; i<= nbBatchs; ++i)
+            {
+                ps.startSize = LifeRatio * LifeRatio* scale;
+                ps.startSpeed *= 6.666f * LifeRatio/ scale;
+                ps.startLifetime *= 0.4f* scale;                
+                
+                ps.Emit(nbParts / nbBatchs);
+                scale += i*0.5f;
+            }
+
+            Destroy(ps.gameObject, ps.startLifetime * 2);
+            //ps.Play();
+        }
+        DestroyObject(this.gameObject);
+    }
+
+    void InitParticleFilter()
+    {
+        /*foreach (ParticleSystem ps in fxController.partSystems)
+            particleSrcFilter.Add(ps.gameObject, true);
+        !fxController.partSystems.Contains(other.GetComponentInChildren<ParticleSystem>()*/
     }
 
     void OnValidate()
@@ -82,11 +108,23 @@ public class PsychObject : MonoBehaviour {
     void OnParticleCollision(GameObject other)
     {
         //ugly!
-        
-        if (other && !fxController.partSystems.Contains(other.GetComponentInChildren<ParticleSystem>()) )
+        bool isFiltered;
+        bool srcFound=particleSrcFilter.TryGetValue(other, out isFiltered);
+        if (!srcFound)
         {
-            Debug.Log("PsychObj Received particle from " + other.name);
-            Debug.LogWarning("Doesn't filter particles from other objects yet!");
+            //isFiltered = !other.GetComponentInParent<VacuumGun>();
+            isFiltered = !other.name.StartsWith("Wp");
+            Debug.Log("Filter " + other+": "+isFiltered);            
+            particleSrcFilter.Add(other, isFiltered);
+        }
+
+
+        if (other != this && !isFiltered
+            /*&& !fxController.partSystems.Contains(other.GetComponentInChildren<ParticleSystem>())*/)
+        {
+
+            //Debug.Log("PsychObj Received particle from " + other.name);
+            //Debug.LogWarning("Doesn't filter particles from other objects yet!");
             currentLife += 1f;
             fxController.intensityModifier = LifeRatio;
             /*var vac = other.transform.parent.parent.parent.GetComponentInChildren<VacuumGun>();

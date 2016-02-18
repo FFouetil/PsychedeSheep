@@ -53,7 +53,7 @@
      <Compile Include="Assets\CustomAssets\Scripts\GunShot.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Extensions.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Helpers\Interfaces.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\Helpers\MathHelper.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\Helpers\MathEx.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\MegasheepGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ParticleFxManager.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Projectile.cs" />

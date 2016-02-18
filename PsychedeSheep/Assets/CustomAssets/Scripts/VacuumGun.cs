@@ -31,7 +31,7 @@ public class VacuumGun : BaseGun
     ///<summary>Half-angle of the cone</summary>
     public float LateralAngleDeg { get { return coneAngleDeg / 2; } set { coneAngleDeg = Mathf.Clamp(value * 2, 0, 359.99f); } }
     ///<summary>Normal of the maximum cone angle</summary>
-    public float EffectiveNormal { get { return MathHelper.AngleDegToNormal(LateralAngleDeg); } }
+    public float EffectiveNormal { get { return MathEx.AngleDegToNormal(LateralAngleDeg); } }
 
     [Header("Blow settings")]
     public float storageLimit=1000;
@@ -51,11 +51,12 @@ public class VacuumGun : BaseGun
     // Use this for initialization
     void Awake()
     {
-        storedParticles = new List<ParticleSystem.Particle>((int)(storageLimit * 100));
+        storedParticles = new List<ParticleSystem.Particle>((int)(storageLimit * 1000));
         col = GetComponentInChildren<SphereCollider>();
         if (col)
             col.isTrigger = false;
     }
+
     void Start()
     {
         _storageLevel = 0;
@@ -64,9 +65,7 @@ public class VacuumGun : BaseGun
             col.radius = maxRange * 20f;
             col.isTrigger = true;
             col.enabled = true;
-
         }
-
     }
 
     // Update is called once per frame
@@ -156,10 +155,15 @@ public class VacuumGun : BaseGun
         blowFxMain.Play();
 
     }
-
+    
+    void PlayAspirationParticles()
+    {
+        //throw new NotImplementedException("PlayAspirationParticles");
+    }
+    
     void StopAspirationParticles()
     {
-        throw new NotImplementedException("StopAspirationParticles");
+        //throw new NotImplementedException("StopAspirationParticles");
     }
 
     void Aspirate(Collider other)
@@ -181,11 +185,11 @@ public class VacuumGun : BaseGun
 
     void AspiratePsychObj(PsychObject psychObj)
     {
+
         var dist = Vector3.Distance(psychObj.transform.position.normalized, col.transform.position.normalized);
-        var angularPower = MathHelper.ValueByDeltaToLinearRatio(
-                EffectiveNormal, 1f,
-                Vector3.Dot(
-                    transform.forward.normalized, (transform.position - psychObj.transform.position).normalized));
+        var angRatio = Vector3.Dot(
+                    transform.forward.normalized, (transform.position - psychObj.transform.position).normalized);
+        var angularPower = MathEx.ValueByDeltaToLinearRatio( EffectiveNormal, 1f, angRatio* angRatio );
         //Debug.Log("AspiratePsychObj " + psychObj.name);
         var absorbedLife= Time.deltaTime
             * GetPowerAtRange(dist)
@@ -201,7 +205,7 @@ public class VacuumGun : BaseGun
     void AspirateParticles(EffectController fxCtrl)
     {
         var distTV = Vector3.Distance(fxCtrl.transform.position, col.transform.position);
-
+        
         //Debug.Log("Collision Stay Vac with " + other.name);
         foreach (ParticleSystem ps in fxCtrl.partSystems)
         {
@@ -215,27 +219,27 @@ public class VacuumGun : BaseGun
             forceModule.y = new ParticleSystem.MinMaxCurve(direction.y*10);
             forceModule.z = new ParticleSystem.MinMaxCurve(direction.z*10);
             */
-
+            var dummyParticle = new ParticleSystem.Particle();
             int np = ps.GetParticles(p);
             //Debug.Log("Collision Stay Vac with " + other.name + " - Nb Particles: " + np);
             for (int i = 0; i < np; i++)
             {
                 var vel = p[i].velocity;
-                if (i%2 == 0)
+                if (i%3 == 0)
                 {
                     
                     //calculate the effectiveness of aspiration according to distance and angle
-                    var distP = Vector3.Distance(p[i].position.normalized, col.transform.position.normalized);
-                    var dirNormal = Vector3.Dot(col.transform.forward.normalized, (col.transform.position - p[i].position).normalized);
-                    var angleRatio = MathHelper.ValueByDeltaToLinearRatio(EffectiveNormal, 1f, dirNormal);
-                    var distRatio=GetPowerAtRange(distP);
-                    var effectRatio = angleRatio* angleRatio * distRatio;
+                    float distP = Vector3.Distance(p[i].position.normalized, col.transform.position.normalized);
+                    float dirNormal = Vector3.Dot(col.transform.forward.normalized, (col.transform.position - p[i].position).normalized);
+                    float angleRatio = MathEx.ValueByDeltaToLinearRatio(EffectiveNormal, 1f, dirNormal);
+                    float distRatio =GetPowerAtRange(distP);
+                    float effectRatio = angleRatio*angleRatio *  distRatio;
 
                     //store every Nth particle if close to the gun
                     if (distP < 0.15f && i % 10 == 0)
                     {
                         StoreParticle(p[i]);
-                        p[i]=new ParticleSystem.Particle();
+                        p[i] = dummyParticle;
                     }
                     else //aspire it toward the gun and add some gravity/momentum
                     {
@@ -244,9 +248,10 @@ public class VacuumGun : BaseGun
 
                         p[i].position = Vector3.MoveTowards(
                             p[i].position, col.transform.position, effectRatio * Time.deltaTime);
+                        var sizeForDT = Time.deltaTime * p[i].startSize;
 
-                        vel.x = (col.transform.position.x- p[i].position.x) * Time.deltaTime * p[i].startSize*15;
-                        vel.z = (col.transform.position.z- p[i].position.z ) * Time.deltaTime*p[i].startSize*15;
+                        vel.x = (col.transform.position.x- p[i].position.x) * sizeForDT * 15;
+                        vel.z = (col.transform.position.z- p[i].position.z ) * sizeForDT * 15;
                         vel.y = Physics.gravity.y * Mathf.Clamp01(1 - effectRatio) * Time.deltaTime;
                         p[i].velocity = vel;
                     }
@@ -273,12 +278,6 @@ public class VacuumGun : BaseGun
         
         storedParticles.Add(particle);
         _storageLevel = storedParticles.Count;
-    }
-
-
-    void PlayAspirationParticles()
-    {
-        throw new NotImplementedException("PlayAspirationParticles");
     }
 
     public float GetPowerAtRange(float distance)

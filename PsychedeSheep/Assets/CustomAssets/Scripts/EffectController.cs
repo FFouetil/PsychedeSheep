@@ -44,7 +44,7 @@ public class EffectController : MonoBehaviour {
 
         //scales bounce duration according to distance
         var dist = Vector3.Distance(this.transform.position, targetEntity.position);
-        var distRatio = MathHelper.ValueByDeltaToLinearRatio(nearEffectDistance, farEffectDistance, dist);
+        var distRatio = MathEx.ValueByDeltaToLinearRatio(nearEffectDistance, farEffectDistance, dist);
         //var distRatio = 
         scaleMorpher.morphCycleDuration = Mathf.Lerp(1/nearEffectIntensity,1/farEffectIntensity, distRatio) * effectDistanceModifier / intensityModifier;
 

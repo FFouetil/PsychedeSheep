@@ -6,13 +6,12 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PostFxTest
-  m_Shader: {fileID: 4800000, guid: 4d27f8419d936864dae0ce663f2dfe02, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _NORMALMAP
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Transparent
+  m_Name: neon_grassWall_01
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION _PARALLAXMAP
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -20,14 +19,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 52827b699a84c2444aef8c5ccfb3e229, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: fb6566c21f717904f83743a5a76dd0b0, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -41,7 +40,7 @@ Material:
         first:
           name: _ParallaxMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 641bb2dce818a8a499b537a1963889ac, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -55,7 +54,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 52827b699a84c2444aef8c5ccfb3e229, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -81,9 +80,9 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ToonShade
+          name: _SpecGlossMap
         second:
-          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -94,19 +93,27 @@ Material:
       data:
         first:
           name: _DstBlend
-        second: 10
+        second: 0
       data:
         first:
           name: _Cutoff
         second: 0.5
       data:
         first:
+          name: _Shininess
+        second: 0.095
+      data:
+        first:
+          name: _Smoothness
+        second: 0.5
+      data:
+        first:
           name: _Parallax
-        second: 0.02
+        second: 0.0359
       data:
         first:
           name: _ZWrite
-        second: 0
+        second: 1
       data:
         first:
           name: _Glossiness
@@ -130,45 +137,25 @@ Material:
       data:
         first:
           name: _Mode
-        second: 3
-      data:
-        first:
-          name: _Metallic
         second: 0
       data:
         first:
-          name: _InvFade
-        second: 0.8
+          name: _Metallic
+        second: 0.467
       data:
         first:
-          name: _ScrollSpeedX
-        second: 1
-      data:
-        first:
-          name: _ScrollSpeedY
-        second: 1
-      data:
-        first:
-          name: _HueModSpeed
-        second: 1
-      data:
-        first:
-          name: _Outline
-        second: 0.0167
-      data:
-        first:
-          name: _BumpAmt
-        second: 99.7
+          name: _EdgeLength
+        second: 23.6
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+        second: {r: 0.01231033, g: 0.357, b: 0, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 0.07586217, g: 1, b: 0, a: 1}
       data:
         first:
-          name: _OutlineColor
-        second: {r: 0, g: 0, b: 0, a: 1}
+          name: _SpecColor
+        second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

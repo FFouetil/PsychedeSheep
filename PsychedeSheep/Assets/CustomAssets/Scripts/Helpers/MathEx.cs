@@ -1,10 +1,10 @@
 ﻿using System;
-#if _ ||  UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE
 using UnityEngine;
 #endif
 
 
-public static class MathHelper
+public static class MathEx
 {
     public static readonly float Deg2Rad = 0.0174532924f;
     public static readonly float Rad2Deg = 57.29578f;
@@ -20,7 +20,7 @@ public static class MathHelper
         return (1 - t) * a + t * b;
     }
 
-#if _ || UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE
     /// <summary>Similar to smoothstep, but smoother at extremities and steeper slope</summary>
     public static float SmootherStep(float a, float b, float t)
     {
