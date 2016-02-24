@@ -41,6 +41,58 @@ ModelImporter:
     100066: Sphere002
     100068: wrist
     100070: wrist_lower
+    100072: arm_attachment_l
+    100074: arm_attachment_r
+    100076: arm_joint_l
+    100078: arm_joint_r
+    100080: arm_l
+    100082: arm_r
+    100084: base_l
+    100086: base_r
+    100088: clavicle_l
+    100090: clavicle_r
+    100092: elbow_l
+    100094: elbow_r
+    100096: eyes
+    100098: foot_joint_l
+    100100: foot_joint_r
+    100102: foot_point_l
+    100104: foot_point_r
+    100106: hand_flat_l
+    100108: hand_flat_r
+    100110: head 1
+    100112: jaw_base
+    100114: jaw_joint
+    100116: knee_l
+    100118: knee_r
+    100120: leg_joint_l
+    100122: leg_joint_r
+    100124: leg_l
+    100126: leg_r
+    100128: mouth
+    100130: neck
+    100132: neck_lever
+    100134: neck_rotator
+    100136: nose 1
+    100138: noseTubes
+    100140: root
+    100142: spine01
+    100144: spine02
+    100146: spine03
+    100148: wrist_dir_l
+    100150: wrist_dir_r
+    100152: wrist_joint_l
+    100154: wrist_joint_r
+    100156: ear_base_l
+    100158: ear_base_r
+    100160: ear_joint_l
+    100162: ear_joint_r
+    100164: ear_link_l
+    100166: ear_link_r
+    100168: foot_toe_l
+    100170: foot_toe_r
+    100172: IK Chain001
+    100174: IK Chain002
     400000: ankle
     400002: ankle_lower
     400004: arm_lower
@@ -77,6 +129,58 @@ ModelImporter:
     400066: Sphere002
     400068: wrist
     400070: wrist_lower
+    400072: arm_attachment_l
+    400074: arm_attachment_r
+    400076: arm_joint_l
+    400078: arm_joint_r
+    400080: arm_l
+    400082: arm_r
+    400084: base_l
+    400086: base_r
+    400088: clavicle_l
+    400090: clavicle_r
+    400092: elbow_l
+    400094: elbow_r
+    400096: eyes
+    400098: foot_joint_l
+    400100: foot_joint_r
+    400102: foot_point_l
+    400104: foot_point_r
+    400106: hand_flat_l
+    400108: hand_flat_r
+    400110: head 1
+    400112: jaw_base
+    400114: jaw_joint
+    400116: knee_l
+    400118: knee_r
+    400120: leg_joint_l
+    400122: leg_joint_r
+    400124: leg_l
+    400126: leg_r
+    400128: mouth
+    400130: neck
+    400132: neck_lever
+    400134: neck_rotator
+    400136: nose 1
+    400138: noseTubes
+    400140: root
+    400142: spine01
+    400144: spine02
+    400146: spine03
+    400148: wrist_dir_l
+    400150: wrist_dir_r
+    400152: wrist_joint_l
+    400154: wrist_joint_r
+    400156: ear_base_l
+    400158: ear_base_r
+    400160: ear_joint_l
+    400162: ear_joint_r
+    400164: ear_link_l
+    400166: ear_link_r
+    400168: foot_toe_l
+    400170: foot_toe_r
+    400172: IK Chain001
+    400174: IK Chain002
     2300000: ankle
     2300002: ankle_lower
     2300004: arm_lower
@@ -173,8 +277,41 @@ ModelImporter:
     4300058: head
     4300060: nose
     4300062: Line002
+    4300064: neck
+    4300066: noseTubes
+    4300068: eyes
     7400000: Take 001
     9500000: //RootNode
+    13700000: ankle
+    13700002: ankle_lower
+    13700004: arm_lower
+    13700006: arm_lower_armor
+    13700008: arm_upper
+    13700010: arm_upper_armor
+    13700012: body
+    13700014: ear
+    13700016: earJoint
+    13700018: earJointBase
+    13700020: elbow_lower
+    13700022: elbow_upper
+    13700024: eyes
+    13700026: foot
+    13700028: hand
+    13700030: head
+    13700032: hip_joint_r
+    13700034: jawJoint
+    13700036: knee_lower
+    13700038: knee_upper
+    13700040: leg_lower
+    13700042: leg_lower_back
+    13700044: leg_upper
+    13700046: leg_upper_armor
+    13700048: neck
+    13700050: nose
+    13700052: noseTubes
+    13700054: shoulder_joint_r
+    13700056: wrist
+    13700058: wrist_lower
   materials:
     importMaterials: 1
     materialName: 0
