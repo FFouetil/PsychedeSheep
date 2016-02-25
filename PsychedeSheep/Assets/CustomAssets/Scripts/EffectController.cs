@@ -46,7 +46,7 @@ public class EffectController : MonoBehaviour {
         var dist = Vector3.Distance(this.transform.position, targetEntity.position);
         var distRatio = MathEx.ValueByDeltaToLinearRatio(nearEffectDistance, farEffectDistance, dist);
         //var distRatio = 
-        scaleMorpher.morphCycleDuration = Mathf.Lerp(1/nearEffectIntensity,1/farEffectIntensity, distRatio) * effectDistanceModifier / intensityModifier;
+        scaleMorpher.morphCycleDuration = Mathf.Lerp(1f/nearEffectIntensity,1f/farEffectIntensity, distRatio) * effectDistanceModifier / intensityModifier;
 
         foreach (ParticleSystem ps in partSystems)
         {

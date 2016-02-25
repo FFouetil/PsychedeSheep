@@ -13,14 +13,19 @@ public class PsychObject : MonoBehaviour {
     public float LifeRatio { get { return currentLife/defaultLife; } }
     public float OverLifeRatio { get { return (currentLife / overlifeLimitRatio); } }
 
+	protected NavMeshAgent navAgent;
+	public GameObject target;
     protected Dictionary<GameObject,bool> particleSrcFilter = new Dictionary<GameObject, bool>(64);
 
     // Use this for initialization
     void Start () {
         //GetComponentInChildren<()
         fxController = GetComponent<EffectController>();
+		navAgent = GetComponent<NavMeshAgent>();
         currentLife = defaultLife;
         InitParticleFilter();
+		target=FindObjectOfType<PlayerCharacter>().gameObject;
+		navAgent.SetDestination(target.transform.position);
     }
 
     // Update is called once per frame
@@ -28,8 +33,10 @@ public class PsychObject : MonoBehaviour {
     {
         //test.
         float scale = 1f;
+		var targetDist=Vector3.Distance(transform.position,target.transform.position);
+		Debug.Log("Target dist: "+targetDist);
         //if life is below max ratio
-        if (LifeRatio < overlifeLimitRatio)
+		if (LifeRatio < overlifeLimitRatio && targetDist > 0.5f)
         {
             if (LifeRatio <= 1f)
                 scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);

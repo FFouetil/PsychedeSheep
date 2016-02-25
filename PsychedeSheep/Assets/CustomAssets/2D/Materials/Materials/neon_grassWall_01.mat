@@ -112,12 +112,20 @@ Material:
         second: 0.0359
       data:
         first:
-          name: _ZWrite
-        second: 1
+          name: _EdgeLength
+        second: 23.6
       data:
         first:
           name: _Glossiness
         second: 0.5
+      data:
+        first:
+          name: _Metallic
+        second: 0.467
+      data:
+        first:
+          name: _ZWrite
+        second: 1
       data:
         first:
           name: _BumpScale
@@ -138,14 +146,6 @@ Material:
         first:
           name: _Mode
         second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0.467
-      data:
-        first:
-          name: _EdgeLength
-        second: 23.6
     m_Colors:
       data:
         first:

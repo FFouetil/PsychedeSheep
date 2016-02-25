@@ -9,10 +9,12 @@ public class MazeGenerator : MonoBehaviour {
 	public Vector2 subDivs=new Vector2(10,10);
 	public List<GameObject> mazeElements;
 	public List<GameObject> mazeBorders;
+	public List<GameObject> freeBlocks;
 
 	public GameObject wallPrefab;
 	public GameObject blockPrefab;
 	public GameObject cornerPrefab;
+	public GameObject spawnerPrefab;
 
 	public bool useManualSeed=true;
 	public int seed=Random.seed;
@@ -29,7 +31,7 @@ public class MazeGenerator : MonoBehaviour {
 		if (!Input.anyKeyDown){
 			if (Random.seed != seed){
 
-				Random.seed=seed;
+				seed=RegenSeed();
 
 			}
 		}
@@ -37,12 +39,7 @@ public class MazeGenerator : MonoBehaviour {
 	}
 
 	void OnValidate(){
-		if (useManualSeed){
-			Random.seed=seed;
-		}
-		else {
-			Random.seed=(int)System.DateTime.Now.ToFileTimeUtc();
-		}
+		RegenSeed();
 	}
 
 	public void DestroyMaze(){
@@ -53,6 +50,7 @@ public class MazeGenerator : MonoBehaviour {
 
 		}
 		mazeElements=new List<GameObject>((int)((subDivs.x+1)*(subDivs.y+1)));
+		DestroyFreeBlocks();
 	}
 
 	public void DestroyBorders(){
@@ -63,6 +61,27 @@ public class MazeGenerator : MonoBehaviour {
 
 		}
 		mazeBorders=new List<GameObject>((int)(subDivs.x*2+subDivs.y*2));
+	}
+
+	public void DestroyFreeBlocks(){
+		for (int i=0; i<freeBlocks.Count; ++i){
+
+			DestroyImmediate(freeBlocks[i]);
+			//mazeElements=null;
+
+		}
+		freeBlocks=new List<GameObject>((int)((subDivs.x+1)*(subDivs.y+1))/2);
+	}
+
+	public int RegenSeed(){
+		if (useManualSeed){
+			return Random.seed=seed;
+		}
+		else {
+			Random.seed=(int)((System.DateTime.Now.Ticks%int.MaxValue));
+			return seed=Random.seed=Random.Range(int.MinValue,int.MaxValue);
+		}
+
 	}
 
 	public void Generate(){
@@ -78,31 +97,41 @@ public class MazeGenerator : MonoBehaviour {
 		Vector3 posOffset=new Vector3(0f,0.5f,0.5f); posOffset.Scale(flrScale);
 		Vector3 pivotOffset=new Vector3(0f,0.5f,0.5f);	pivotOffset.Scale(flrScale);
 
-		int maxBlocksX=(int)(subDivs.x*0.4f);
-		int maxBlocksZ=(int)(subDivs.y*0.4f);
+		int maxBlocksX=(int)(subDivs.x*0.33f);
+		int maxBlocksZ=(int)(subDivs.y*0.33f);
 		int[] cntX= new int[(int)subDivs.x];
 		int[] cntZ= new int[(int)subDivs.y];
 
 		int safeMargin=2;
-		for (int z=safeMargin+2; z<subDivs.y-safeMargin; z++){
+		for (int z=safeMargin+2; z<subDivs.y-safeMargin-1; z++){
 
 			for (int x=safeMargin-1; x<subDivs.x-safeMargin+1; ++x){
+				GameObject nObject=null;
+				bool placeWall=Random.value > 0.7f && cntX[x] < maxBlocksX && cntZ[z] < maxBlocksZ;
 
-				bool spawn=Random.value > 0.15f && cntX[x] < maxBlocksX && cntZ[z] < maxBlocksZ;
-				if (spawn){
-					var pos=posOffsetX+posOffsetZ+posOffsetY;
-					pos.Scale(flrScale/2); pos.y*=2;
+				var pos=posOffsetX+posOffsetZ+posOffsetY;
+				pos.Scale(flrScale/2); pos.y*=2;
 
-					GameObject nWall=(GameObject)Instantiate(blockPrefab,pos,Quaternion.identity);
-
-					nWall.transform.SetParent(this.floor);
-					nWall.transform.position+=new Vector3(x*flrScale.x/2,0,z*flrScale.z/2);
-
-					mazeElements.Add(nWall);
+				if (placeWall){
+					nObject=(GameObject)Instantiate(blockPrefab,pos,Quaternion.identity);
+					mazeElements.Add(nObject);
 					cntX[x]++;
 					cntZ[z]++;
 				}
+				else{ //mark as freeblock for spawner pass
+					nObject=(GameObject)Instantiate(spawnerPrefab,pos,Quaternion.identity);
+					freeBlocks.Add(nObject);
+				}
 
+
+				if (nObject){
+					nObject.transform.SetParent(this.floor);
+					nObject.transform.position+=new Vector3(x*flrScale.x/2,0,z*flrScale.z/2);
+				}
+					
+
+				
+				//freeBlocks
 
 			}
 		}
@@ -159,28 +188,44 @@ public class MazeGeneratorEditor : Editor{
 	{
 		
 
-		MazeGenerator myScript = (MazeGenerator)target;
+		MazeGenerator mazeGen = (MazeGenerator)target;
 		if(GUILayout.Button("Generate Maze"))
 		{
-			if ( myScript.seed != Random.seed )
-				Random.seed=myScript.seed;
-				myScript.Generate();
+			var oldSeed=Random.seed;
+			var newSeed=mazeGen.RegenSeed();
+			if (  oldSeed != newSeed ){
+				mazeGen.Generate();
+			}
+		
 		}
 
 		if(GUILayout.Button("Generate Borders"))
 		{
+			
+			mazeGen.GenerateBorders();
+		}
 
-			myScript.GenerateBorders();
+		if(GUILayout.Button("Generate All"))
+		{
+			mazeGen.GenerateBorders();
+			mazeGen.Generate();
+
 		}
 
 		if(GUILayout.Button("Clear Maze"))
 		{
-			myScript.DestroyMaze();
+			mazeGen.DestroyMaze();
+			mazeGen.DestroyFreeBlocks();
 		}
 
 		if(GUILayout.Button("Clear Borders"))
 		{
-			myScript.DestroyBorders();
+			mazeGen.DestroyBorders();
+		}
+
+		if(GUILayout.Button("Clear Free Blocks/Spawners"))
+		{
+			mazeGen.DestroyFreeBlocks();
 		}
 
 		DrawDefaultInspector();

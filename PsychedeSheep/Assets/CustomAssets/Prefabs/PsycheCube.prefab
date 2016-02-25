@@ -68,6 +68,7 @@ GameObject:
   - 114: {fileID: 11496922}
   - 114: {fileID: 11408338}
   - 114: {fileID: 11402990}
+  - 195: {fileID: 19544068}
   m_Layer: 0
   m_Name: PsycheCube
   m_TagString: Untagged
@@ -118,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.67, y: 2.5, z: -13.25}
+  m_LocalPosition: {x: 7.2, y: 2.5, z: 75.3}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 469370}
@@ -327,7 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLife: 100
   currentLife: 100
-  overlifeLimitRatio: 1.5
+  overlifeLimitRatio: 3
 --- !u!114 &11408338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,13 +342,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partSystems: []
   updateLinkedControllers: 1
-  scaleMorpher: {fileID: 11415672}
-  colorCycler: {fileID: 11496922}
+  scaleMorpher: {fileID: 0}
+  colorCycler: {fileID: 0}
   targetEntity: {fileID: 0}
-  nearEffectIntensity: 5
-  farEffectIntensity: 1
+  nearEffectIntensity: 1
+  farEffectIntensity: 10
   nearEffectDistance: 0.25
-  farEffectDistance: 25
+  farEffectDistance: 10
   effectDistanceModifier: 1
   intensityModifier: 1
 --- !u!114 &11414640
@@ -363,8 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debrisPrefabs: []
   firePrefab: {fileID: 0}
-  numDebrisPieces: 99
-  numFires: 58
+  numDebrisPieces: 0
+  numFires: 0
 --- !u!114 &11415672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,11 +393,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433e9c8d0293ac4429eaf19bff2b58cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 452112, guid: fb13e7550d0ff154f9fe9a782aa6588c, type: 2}
+  explosionPrefab: {fileID: 0}
   detonationImpactVelocity: 10
   sizeMultiplier: 1
   reset: 1
-  resetTimeDelay: 1
+  resetTimeDelay: 10
 --- !u!114 &11473506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,8 +410,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionFxPrefab: {fileID: 0}
-  explosionForce: 0
-  explosionSize: 0
+  explosionForce: 1000
+  explosionSize: 1
 --- !u!114 &11496922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,18 +423,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce634de5e5af44458e9a64e4f76ac26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorCycle:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0.9862069, g: 1, b: 0, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  selfIllumRatioMin: 0.75
-  selfIllumRatioMax: 1
-  colorChangeDuration: 0.24
+  colorCycle: []
+  selfIllumRatioMin: 0.5
+  selfIllumRatioMax: 1.5
+  colorChangeDuration: 1
   effectModifier: 1
-  fadeSpeed: 1
-  linkedTimedModule: {fileID: 11415672}
-  matchScaleBounceCycles: 1
+  fadeSpeed: 8
+  linkedTimedModule: {fileID: 0}
+  matchScaleBounceCycles: 0
 --- !u!135 &13510478
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -458,6 +455,26 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &19544068
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131510}
+  m_Enabled: 1
+  m_Radius: 0.66
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!198 &19832652
 ParticleSystem:
   m_ObjectHideFlags: 1
