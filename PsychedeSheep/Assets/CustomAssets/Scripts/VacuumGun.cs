@@ -169,7 +169,7 @@ public class VacuumGun : BaseGun
     void Aspirate(Collider other)
     {
 
-        var psychObj = other.GetComponentInParent<PsychObject>();
+        var psychObj = other.GetComponentInParent<PsychEnemy>();
         var fxCtrl = psychObj ? psychObj.fxController : null;
 
         if (psychObj) {
@@ -183,7 +183,7 @@ public class VacuumGun : BaseGun
 
     }
 
-    void AspiratePsychObj(PsychObject psychObj)
+    void AspiratePsychObj(PsychEnemy psychObj)
     {
 
         var dist = Vector3.Distance(psychObj.transform.position.normalized, col.transform.position.normalized);

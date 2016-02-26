@@ -212,18 +212,18 @@ public class MazeGeneratorEditor : Editor{
 
 		}
 
-		if(GUILayout.Button("Clear Maze"))
+		if(mazeGen.mazeElements.Count>0 && GUILayout.Button("Clear Maze"))
 		{
 			mazeGen.DestroyMaze();
 			mazeGen.DestroyFreeBlocks();
 		}
 
-		if(GUILayout.Button("Clear Borders"))
+		if(mazeGen.mazeBorders.Count>0 && GUILayout.Button("Clear Borders"))
 		{
 			mazeGen.DestroyBorders();
 		}
 
-		if(GUILayout.Button("Clear Free Blocks/Spawners"))
+		if(mazeGen.freeBlocks.Count>0 && GUILayout.Button("Clear Free Blocks/Spawners"))
 		{
 			mazeGen.DestroyFreeBlocks();
 		}

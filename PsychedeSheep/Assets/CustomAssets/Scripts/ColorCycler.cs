@@ -7,7 +7,7 @@ using System;
 public class ColorCycler : MonoBehaviour, ITimed {
 
     public Color CurrentColor { get; protected set; }
-    public List<Color> colorCycle = new List<Color>(2);
+	public List<Color> colorCycle;
     [Range(0, 3)]
     public float selfIllumRatioMin=0.5f;
     [Range(0, 3)]
@@ -32,10 +32,15 @@ public class ColorCycler : MonoBehaviour, ITimed {
     void Awake()
     {
         r = GetComponent<Renderer>();
+
     }
     // Use this for initialization
     void Start () {
 
+		if (colorCycle == null){
+			colorCycle=new List<Color>(2);
+			colorCycle.Add(Color.white);
+		}
         /*if (colorCycle.Count == 1)
         {   //makes sure we never try to cycle through un-initialized 2nd slot
             colorCycle[1] = colorCycle[0];
@@ -74,11 +79,7 @@ public class ColorCycler : MonoBehaviour, ITimed {
         {
             colorChangeTimer = 0;
 
-            if (colorCycle.Count > 1)
-            {
-                //remove current/first color from the list and put it back at the end
-                NextColor();
-            }
+            NextColor();
 
         }
         else
@@ -91,9 +92,12 @@ public class ColorCycler : MonoBehaviour, ITimed {
 
     void NextColor()
     {
-        var queuedColor = colorCycle[0];
-        colorCycle.RemoveAt(0);
-        colorCycle.Add(queuedColor);
+		if (colorCycle.Count > 1){
+			//remove current/first color from the list and put it back at the end
+	        var queuedColor = colorCycle[0];
+	        colorCycle.RemoveAt(0);
+	        colorCycle.Add(queuedColor);
+		}
     }
 
     void UpdateMaterial(float timerRatio)

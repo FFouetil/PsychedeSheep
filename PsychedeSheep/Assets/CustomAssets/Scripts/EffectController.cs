@@ -34,6 +34,12 @@ public class EffectController : MonoBehaviour {
         if (!targetEntity)
             targetEntity = GameObject.FindObjectOfType<Sheep>().transform;
 
+		if (!scaleMorpher)
+			scaleMorpher = GetComponent<ScaleMorpher>();
+
+		if (!colorCycler)
+			colorCycler = GetComponent<ColorCycler>();
+
         fxControllers.Add(this);
         GetComponentsInChildren<ParticleSystem>(partSystems);
 

@@ -58,7 +58,7 @@
      <Compile Include="Assets\CustomAssets\Scripts\MegasheepGun.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ParticleFxManager.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Projectile.cs" />
-     <Compile Include="Assets\CustomAssets\Scripts\PsychObject.cs" />
+     <Compile Include="Assets\CustomAssets\Scripts\PsychEnemy.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\ScaleMorpher.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\Sheep.cs" />
      <Compile Include="Assets\CustomAssets\Scripts\VacuumGun.cs" />

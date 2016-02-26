@@ -5,10 +5,10 @@ public class Sheep : MonoBehaviour {
 
 	public ConstantForce JetPack;
 	protected Rigidbody rigid;
-	public float MaxJetForce=500;
-	public float MaxEffectiveHeight=100;
-	[Range(0,1)]
-	public float FullPowerHeightRatio=0.875f;
+	//public float MaxJetForce=500;
+	//public float MaxEffectiveHeight=100;
+	//[Range(0,1)]
+	//public float FullPowerHeightRatio=0.875f;
 	public float TimeToFullspeed=5;
 	protected float pressDuration;
 	protected float lastRefForce;
@@ -39,7 +39,7 @@ public class Sheep : MonoBehaviour {
             transform.position += (rigid.transform.forward * Time.fixedDeltaTime * v * translateMod) + rigid.transform.right * Time.fixedDeltaTime * h * translateMod;
             transform.Rotate(new Vector3(0, rY * Time.fixedDeltaTime * rotateMod, 0));
         }
-
+		/*
         if ( Input.GetButtonDown("Fly")){
 
 			//rigid.AddForce(0,300,0);
@@ -62,7 +62,7 @@ public class Sheep : MonoBehaviour {
 			var relForce=JetPack.relativeForce; 
 			lastRefForce=relForce.y=10+Mathf.Lerp(lastRefForce,MaxJetForce,pressDuration/TimeToFullspeed);
 			JetPack.relativeForce=relForce;
-			*/
+			* /
 		}
 		else if ( Input.GetButtonUp("Fly"))
 		{
@@ -71,5 +71,6 @@ public class Sheep : MonoBehaviour {
 			relForce.y=lastRefForce=Mathf.Lerp(relForce.y-0.1f,0,3f);
 			JetPack.relativeForce=relForce;
 		}
+	*/
 	}
 }

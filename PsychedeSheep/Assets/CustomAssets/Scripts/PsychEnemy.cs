@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 
 [RequireComponent(typeof(EffectController), typeof(ColorCycler))]
-public class PsychObject : MonoBehaviour {
+public class PsychEnemy : MonoBehaviour {
 
+	protected Collider col;
     public EffectController fxController {get; protected set;}
 
     public float defaultLife=100;
@@ -33,10 +34,10 @@ public class PsychObject : MonoBehaviour {
     {
         //test.
         float scale = 1f;
-		var targetDist=Vector3.Distance(transform.position,target.transform.position);
-		Debug.Log("Target dist: "+targetDist);
+		//var targetDist=Vector3.Distance(transform.position,target.transform.position);
+		//Debug.Log("Target dist: "+targetDist);
         //if life is below max ratio
-		if (LifeRatio < overlifeLimitRatio && targetDist > 0.5f)
+		if (LifeRatio < overlifeLimitRatio )
         {
             if (LifeRatio <= 1f)
                 scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
@@ -47,7 +48,6 @@ public class PsychObject : MonoBehaviour {
             {
                 ps.startSize = scale;
             }
-
 
             fxController.scaleMorpher.globalScaleModifier = scale;
 
@@ -144,4 +144,10 @@ public class PsychObject : MonoBehaviour {
 
 
     }
+
+	void OnCollisionEnter(Collision collision){
+		if (collision.transform.GetComponent<PlayerCharacter>() ){
+			PlayBlowParticles();
+		}
+	}
 }

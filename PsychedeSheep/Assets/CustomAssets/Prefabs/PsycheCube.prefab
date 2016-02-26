@@ -323,12 +323,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 131510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866e8e6d37fd4b54c86c0844932c3096, type: 3}
+  m_Script: {fileID: 11500000, guid: f6c0aa5f8c9657a488c3192f2ad3f8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   defaultLife: 100
   currentLife: 100
-  overlifeLimitRatio: 3
+  overlifeLimitRatio: 1.5
+  target: {fileID: 146452, guid: 7fb0a327d519d5f44976dcf254ec4cf5, type: 2}
 --- !u!114 &11408338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,13 +343,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partSystems: []
   updateLinkedControllers: 1
-  scaleMorpher: {fileID: 0}
-  colorCycler: {fileID: 0}
+  scaleMorpher: {fileID: 11415672}
+  colorCycler: {fileID: 11496922}
   targetEntity: {fileID: 0}
-  nearEffectIntensity: 1
-  farEffectIntensity: 10
+  nearEffectIntensity: 5
+  farEffectIntensity: 1
   nearEffectDistance: 0.25
-  farEffectDistance: 10
+  farEffectDistance: 25
   effectDistanceModifier: 1
   intensityModifier: 1
 --- !u!114 &11414640
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131510}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 433e9c8d0293ac4429eaf19bff2b58cf, type: 3}
   m_Name: 
@@ -423,14 +424,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce634de5e5af44458e9a64e4f76ac26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorCycle: []
+  colorCycle:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
   selfIllumRatioMin: 0.5
   selfIllumRatioMax: 1.5
   colorChangeDuration: 1
   effectModifier: 1
   fadeSpeed: 8
-  linkedTimedModule: {fileID: 0}
-  matchScaleBounceCycles: 0
+  linkedTimedModule: {fileID: 11415672}
+  matchScaleBounceCycles: 1
 --- !u!135 &13510478
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -3493,9 +3498,97 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: colorCycle.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 96f730e8d384ac04580f6f897527d1d3, type: 2}
+    - target: {fileID: 0}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 146452, guid: 7fb0a327d519d5f44976dcf254ec4cf5, type: 2}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[0].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[1].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[1].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[2].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[2].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[2].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[3].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorCycle.Array.data[3].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scaleMorpher
+      value: 
+      objectReference: {fileID: 11415672}
+    - target: {fileID: 0}
+      propertyPath: colorCycler
+      value: 
+      objectReference: {fileID: 11496922}
+    - target: {fileID: 0}
+      propertyPath: nearEffectIntensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: farEffectIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: farEffectDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: overlifeLimitRatio
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: linkedTimedModule
+      value: 
+      objectReference: {fileID: 11415672}
+    - target: {fileID: 0}
+      propertyPath: matchScaleBounceCycles
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131510}
