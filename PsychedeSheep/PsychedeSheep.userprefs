@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CustomAssets\Scripts\PsychObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CustomAssets\Scripts\Generic\Structures.cs">
     <Files>
-      <File FileName="Assets\CustomAssets\Scripts\PsychObject.cs" Line="14" Column="71" />
-      <File FileName="Assets\CustomAssets\Scripts\MazeGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\Cameras\Scripts\LookatTarget.cs" Line="1" Column="1" />
-      <File FileName="Assets\Spawner.cs" Line="1" Column="1" />
-      <File FileName="Assets\CustomAssets\Scripts\EffectController.cs" Line="1" Column="1" />
+      <File FileName="Assets\CustomAssets\Scripts\PsychEnemy.cs" Line="183" Column="29" />
+      <File FileName="Assets\CustomAssets\Scripts\MazeGenerator.cs" Line="10" Column="25" />
+      <File FileName="Assets\CustomAssets\Scripts\EffectController.cs" Line="80" Column="1" />
+      <File FileName="Assets\CustomAssets\Scripts\VacuumGun.cs" Line="104" Column="13" />
+      <File FileName="Assets\CustomAssets\Scripts\CameraIntro.cs" Line="30" Column="9" />
+      <File FileName="Assets\CustomAssets\Scripts\PlayerCharacter.cs" Line="51" Column="30" />
+      <File FileName="Assets\CustomAssets\Scripts\Generic\Structures.cs" Line="2" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

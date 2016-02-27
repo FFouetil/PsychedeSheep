@@ -22,6 +22,8 @@ public class PsychEnemy : MonoBehaviour {
 
 	protected float lastRaycast=0f;
 
+	protected Vector3 spawnLocation;
+
     // Use this for initialization
     void Awake () {
         //GetComponentInChildren<()
@@ -35,6 +37,7 @@ public class PsychEnemy : MonoBehaviour {
 		//sndExplo=Resources.Load<AudioClip>("explo1.wav");
 		sndSource=GetComponentInChildren<AudioSource>();
 		sndSource.clip=sndExplo;
+		spawnLocation=transform.position;
     }
 
     // Update is called once per frame
@@ -47,8 +50,11 @@ public class PsychEnemy : MonoBehaviour {
         //if life is below max ratio
 		if (LifeRatio < overlifeLimitRatio )
         {
-            if (LifeRatio <= 1f)
-                scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
+			if (LifeRatio <= 1f){
+				scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
+				currentLife+=0.5f;
+			}
+                
             else
                 scale *= LifeRatio * LifeRatio;// Mathf.LerpUnclamped(1f, 1f, LifeRatio);
 
@@ -58,10 +64,11 @@ public class PsychEnemy : MonoBehaviour {
             }
 
             fxController.scaleMorpher.globalScaleModifier = scale;
+			navAgent.speed=Mathf.SmoothStep(1,9,LifeRatio);
 
-			if (false) //skip raycasts for testing
+			//if (false) //skip raycasts for testing
 			if ( (lastRaycast+=Time.fixedDeltaTime) > 0.333f ){
-				//they go toward the last known player position unless they can see and follow him
+				//they go back their spawn position unless they can see and follow him
 				RaycastHit hit;
 				var rayDirection = target.transform.position - transform.position;
 				if (Physics.Raycast (transform.position,rayDirection, out hit)) {
@@ -70,6 +77,7 @@ public class PsychEnemy : MonoBehaviour {
 						navAgent.SetDestination(target.transform.position);
 					} else {
 						// there is something obstructing the view
+						navAgent.SetDestination(spawnLocation);
 					}
 				}
 				lastRaycast=0;
@@ -172,7 +180,7 @@ public class PsychEnemy : MonoBehaviour {
 
             //Debug.Log("PsychObj Received particle from " + other.name);
             //Debug.LogWarning("Doesn't filter particles from other objects yet!");
-            currentLife += 1f;
+            currentLife -= 5f;
             fxController.intensityModifier = LifeRatio;
             /*var vac = other.transform.parent.parent.parent.GetComponentInChildren<VacuumGun>();
             if (vac)

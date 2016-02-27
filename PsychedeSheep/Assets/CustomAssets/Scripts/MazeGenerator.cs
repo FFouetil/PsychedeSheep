@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class MazeGenerator : MonoBehaviour {
@@ -140,11 +142,13 @@ public class MazeGenerator : MonoBehaviour {
 			}
 		}
 
-		int requiredSpawnerCount=10;
+		int requiredSpawnerCount=16;
 		int enabledSpawners=0;
+		var oldseed=seed;
+		RegenSeed();
 		while ( enabledSpawners < requiredSpawnerCount ){
 			foreach (GameObject sp in freeBlocks)
-				if (Random.value < 0.10 && !sp.activeSelf){
+				if (Random.value < 0.050 && !sp.activeSelf){
 					sp.SetActive(true); enabledSpawners++;
 				}
 				
@@ -156,6 +160,7 @@ public class MazeGenerator : MonoBehaviour {
 				if (freeBlocks.Remove(v));
 					DestroyImmediate(v);
 			}
+		seed=oldseed;
 		//freeBlocks.Capacity=freeBlocks.Count;
 		//freeBlocks.RemoveAll( go => !go.activeSelf );
 
@@ -204,6 +209,7 @@ public class MazeGenerator : MonoBehaviour {
 }
 
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(MazeGenerator))]
 public class MazeGeneratorEditor : Editor{
 
@@ -254,3 +260,4 @@ public class MazeGeneratorEditor : Editor{
 		DrawDefaultInspector();
 	}
 }
+#endif

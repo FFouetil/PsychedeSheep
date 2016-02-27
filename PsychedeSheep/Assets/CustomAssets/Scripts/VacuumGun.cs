@@ -41,6 +41,7 @@ public class VacuumGun : BaseGun
     [SerializeField]
     public List<ParticleSystem.Particle> storedParticles;
     public ParticleSystem blowFxMain;
+	public bool useAspiredParticles;
 
 
     //cached stuff
@@ -71,6 +72,7 @@ public class VacuumGun : BaseGun
     // Update is called once per frame
     void Update()
     {
+		/*
         //fire 2 is aspiration key
         if (Input.GetButtonDown("Fire2"))
         {
@@ -95,7 +97,7 @@ public class VacuumGun : BaseGun
         }
 
         //fire 1 is shoot key
-        else if (Input.GetButtonDown("Fire1"))
+        else*/ if (Input.GetButtonDown("Fire1"))
         {
             isBlowing = true;
             blowFxMain.Play();
@@ -106,7 +108,7 @@ public class VacuumGun : BaseGun
         {
             
             //Debug.Log("Holding Fire1");
-            //Aspirate();
+
         }
         else if (Input.GetButtonUp("Fire1"))
         {
@@ -125,7 +127,7 @@ public class VacuumGun : BaseGun
     void Fire()
     {
         blowFxMain.Pause();
-        if (storedParticles.Count > 0)
+		if (useAspiredParticles && storedParticles.Count > 0)
         {
             int bunchSize = Mathf.Min(4, storedParticles.Count);            
 
@@ -149,7 +151,7 @@ public class VacuumGun : BaseGun
         }
         else
         {
-            blowFxMain.startColor = Color.gray/5;
+            blowFxMain.startColor = Color.grey;
         }
         _storageLevel = storedParticles.Count;
         blowFxMain.Play();
