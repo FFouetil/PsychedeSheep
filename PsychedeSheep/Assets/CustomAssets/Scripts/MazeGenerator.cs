@@ -17,10 +17,11 @@ public class MazeGenerator : MonoBehaviour {
 	public GameObject spawnerPrefab;
 
 	public bool useManualSeed=true;
-	public int seed=Random.seed;
+	public int seed;
 
 	// Use this for initialization
 	void Start () {
+		seed=Random.seed;
 		//DestroyMaze();
 		//DestroyBorders();
 	}
@@ -103,16 +104,18 @@ public class MazeGenerator : MonoBehaviour {
 		int[] cntZ= new int[(int)subDivs.y];
 
 		int safeMargin=2;
-		for (int z=safeMargin+2; z<subDivs.y-safeMargin-1; z++){
+		for (int z=0; z<subDivs.y; z++){
 
-			for (int x=safeMargin-1; x<subDivs.x-safeMargin+1; ++x){
+			for (int x=safeMargin-2; x<subDivs.x-safeMargin+2; ++x){
 				GameObject nObject=null;
+				bool keepEmpty= (z<4 || z>subDivs.y-4)
+					&& ( x < subDivs.x/2+4 && x > subDivs.x/2-4);
 				bool placeWall=Random.value > 0.7f && cntX[x] < maxBlocksX && cntZ[z] < maxBlocksZ;
 
 				var pos=posOffsetX+posOffsetZ+posOffsetY;
 				pos.Scale(flrScale/2); pos.y*=2;
 
-				if (placeWall){
+				if (placeWall && !keepEmpty){
 					nObject=(GameObject)Instantiate(blockPrefab,pos,Quaternion.identity);
 					mazeElements.Add(nObject);
 					cntX[x]++;
@@ -120,6 +123,7 @@ public class MazeGenerator : MonoBehaviour {
 				}
 				else{ //mark as freeblock for spawner pass
 					nObject=(GameObject)Instantiate(spawnerPrefab,pos,Quaternion.identity);
+					nObject.SetActive(false);
 					freeBlocks.Add(nObject);
 				}
 
@@ -136,6 +140,25 @@ public class MazeGenerator : MonoBehaviour {
 			}
 		}
 
+		int requiredSpawnerCount=10;
+		int enabledSpawners=0;
+		while ( enabledSpawners < requiredSpawnerCount ){
+			foreach (GameObject sp in freeBlocks)
+				if (Random.value < 0.10 && !sp.activeSelf){
+					sp.SetActive(true); enabledSpawners++;
+				}
+				
+		}
+		//destroy and remove useless spawners
+		for (int i=0; i<freeBlocks.Count;++i)
+			if (!freeBlocks[i].activeSelf){
+				var v=freeBlocks[i];
+				if (freeBlocks.Remove(v));
+					DestroyImmediate(v);
+			}
+		//freeBlocks.Capacity=freeBlocks.Count;
+		//freeBlocks.RemoveAll( go => !go.activeSelf );
+
 	}
 
 	public void GenerateBorders(){
@@ -150,9 +173,9 @@ public class MazeGenerator : MonoBehaviour {
 		GameObject nWall=null;
 
 		//yes, this is an ugly couple of loops, but I'm in a rush
-		for (int z=1; z<subDivs.y-1; z++){
-			pos1=posOffsetZ+posOffsetX+posOffsetY+new Vector3(0,0,z);
-			pos2=posOffsetZ+posOffsetX+posOffsetY+new Vector3((subDivs.x-1),0,z);
+		for (int z=0; z<subDivs.y; z++){
+			pos1=posOffsetZ+posOffsetX+posOffsetY+new Vector3(-1,0,z);
+			pos2=posOffsetZ+posOffsetX+posOffsetY+new Vector3((subDivs.x),0,z);
 			pos1.Scale(floor.localScale/2); pos1.y*=2;
 			pos2.Scale(floor.localScale/2); pos2.y*=2;
 			nWall=(GameObject)Instantiate(wallPrefab,pos1,Quaternion.identity);
@@ -162,9 +185,9 @@ public class MazeGenerator : MonoBehaviour {
 			nWall.transform.SetParent(this.floor);
 			mazeBorders.Add(nWall);
 		}
-		for (int x=1; x<subDivs.x-1; x++){
-			pos1=posOffsetZ+posOffsetX+posOffsetY+new Vector3(x,0,0);
-			pos2=posOffsetZ+posOffsetX+posOffsetY+new Vector3(x,0,(subDivs.y-1));
+		for (int x=0; x<subDivs.x; x++){
+			pos1=posOffsetZ+posOffsetX+posOffsetY+new Vector3(x,0,-1);
+			pos2=posOffsetZ+posOffsetX+posOffsetY+new Vector3(x,0,(subDivs.y));
 			pos1.Scale(floor.localScale/2); pos1.y*=2;
 			pos2.Scale(floor.localScale/2); pos2.y*=2;
 			nWall=(GameObject)Instantiate(wallPrefab,pos1,Quaternion.identity);

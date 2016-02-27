@@ -1,0 +1,10 @@
+diff a/PsychedeSheep/Assets/CustomAssets/Prefabs/PsycheBall.prefab b/PsychedeSheep/Assets/CustomAssets/Prefabs/PsycheBall.prefab	(rejected hunks)
+@@ -166,7 +166,7 @@
+   m_PrefabInternal: {fileID: 100100000}
+   m_GameObject: {fileID: 193996}
+   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+-  m_LocalPosition: {x: -5, y: 2.5, z: -5}
++  m_LocalPosition: {x: -2.7, y: 2.5, z: 82.3}
+   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+   m_Children:
+   - {fileID: 411854}

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EffectController : MonoBehaviour {
-    protected static List<EffectController> fxControllers = new List<EffectController>(8);
+    protected static List<EffectController> fxControllers = new List<EffectController>();
+	protected Renderer r;
 
     [SerializeField]
     public List<ParticleSystem> partSystems;
@@ -31,6 +32,8 @@ public class EffectController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		if(!r)
+			r=GetComponent<Renderer>();
         if (!targetEntity)
             targetEntity = GameObject.FindObjectOfType<Sheep>().transform;
 
@@ -48,22 +51,25 @@ public class EffectController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //scales bounce duration according to distance
-        var dist = Vector3.Distance(this.transform.position, targetEntity.position);
-        var distRatio = MathEx.ValueByDeltaToLinearRatio(nearEffectDistance, farEffectDistance, dist);
-        //var distRatio = 
-        scaleMorpher.morphCycleDuration = Mathf.Lerp(1f/nearEffectIntensity,1f/farEffectIntensity, distRatio) * effectDistanceModifier / intensityModifier;
+		if (r.isVisible){
 
-        foreach (ParticleSystem ps in partSystems)
-        {
-            var color = ps.startColor;
-            color = colorCycler.CurrentColor* intensityModifier;
-            color.a +=0.5f;
-            ps.startColor = color;
-        }
+			//scales bounce duration according to distance
+			var dist = Vector3.Distance(this.transform.position, targetEntity.position);
+			var distRatio = MathEx.ValueByDeltaToLinearRatio(nearEffectDistance, farEffectDistance, dist);
+			//var distRatio = 
+			scaleMorpher.morphCycleDuration = Mathf.Lerp(1f/nearEffectIntensity,1f/farEffectIntensity, distRatio) * effectDistanceModifier / intensityModifier;
 
-        colorCycler.effectModifier = intensityModifier;
+			foreach (ParticleSystem ps in partSystems)
+			{
 
+				var color = ps.startColor;
+				color = colorCycler.CurrentColor* intensityModifier;
+				color.a +=0.5f;
+				ps.startColor = color;
+			}
+
+			colorCycler.effectModifier = intensityModifier;
+		}
     }
 
 

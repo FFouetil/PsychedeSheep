@@ -62,9 +62,6 @@ GameObject:
   - 23: {fileID: 2374348}
   - 114: {fileID: 11415672}
   - 54: {fileID: 5419614}
-  - 114: {fileID: 11473506}
-  - 114: {fileID: 11469932}
-  - 114: {fileID: 11414640}
   - 114: {fileID: 11496922}
   - 114: {fileID: 11408338}
   - 114: {fileID: 11402990}
@@ -89,6 +86,22 @@ GameObject:
   - 23: {fileID: 2377392}
   m_Layer: 0
   m_Name: left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &155514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 434106}
+  - 82: {fileID: 8210758}
+  m_Layer: 0
+  m_Name: SndSrc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,6 +138,7 @@ Transform:
   - {fileID: 469370}
   - {fileID: 489044}
   - {fileID: 462000}
+  - {fileID: 434106}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &430656
@@ -139,6 +153,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 469370}
   m_RootOrder: 1
+--- !u!4 &434106
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 407980}
+  m_RootOrder: 3
 --- !u!4 &462000
 Transform:
   m_ObjectHideFlags: 1
@@ -315,6 +341,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.2, z: 1}
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!82 &8210758
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155514}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &11402990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -326,6 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0aa5f8c9657a488c3192f2ad3f8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sndSource: {fileID: 0}
+  sndExplo: {fileID: 8300000, guid: 64860b35d9aa1fd41ac873b9a76e0f19, type: 3}
   defaultLife: 100
   currentLife: 100
   overlifeLimitRatio: 1.5
@@ -352,21 +454,6 @@ MonoBehaviour:
   farEffectDistance: 25
   effectDistanceModifier: 1
   intensityModifier: 1
---- !u!114 &11414640
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131510}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 009fbf49e77db344db366a646868e02d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debrisPrefabs: []
-  firePrefab: {fileID: 0}
-  numDebrisPieces: 0
-  numFires: 0
 --- !u!114 &11415672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,36 +470,6 @@ MonoBehaviour:
   morphHorizontalRatio: 0.1
   morphVerticalRatio: -0.2
   globalScaleModifier: 1
---- !u!114 &11469932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131510}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 433e9c8d0293ac4429eaf19bff2b58cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
-  detonationImpactVelocity: 10
-  sizeMultiplier: 1
-  reset: 1
-  resetTimeDelay: 10
---- !u!114 &11473506
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131510}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bda14c0d78bcdd46a3a6f4875e378fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionFxPrefab: {fileID: 0}
-  explosionForce: 1000
-  explosionSize: 1
 --- !u!114 &11496922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3589,6 +3646,38 @@ Prefab:
       propertyPath: matchScaleBounceCycles
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sndSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sndExplo
+      value: 
+      objectReference: {fileID: 8300000, guid: 64860b35d9aa1fd41ac873b9a76e0f19, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131510}

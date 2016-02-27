@@ -6,6 +6,8 @@ public class PsychEnemy : MonoBehaviour {
 
 	protected Collider col;
     public EffectController fxController {get; protected set;}
+	public AudioSource sndSource;
+	public AudioClip sndExplo;
 
     public float defaultLife=100;
     public float currentLife;
@@ -18,8 +20,10 @@ public class PsychEnemy : MonoBehaviour {
 	public GameObject target;
     protected Dictionary<GameObject,bool> particleSrcFilter = new Dictionary<GameObject, bool>(64);
 
+	protected float lastRaycast=0f;
+
     // Use this for initialization
-    void Start () {
+    void Awake () {
         //GetComponentInChildren<()
         fxController = GetComponent<EffectController>();
 		navAgent = GetComponent<NavMeshAgent>();
@@ -27,6 +31,10 @@ public class PsychEnemy : MonoBehaviour {
         InitParticleFilter();
 		target=FindObjectOfType<PlayerCharacter>().gameObject;
 		navAgent.SetDestination(target.transform.position);
+
+		//sndExplo=Resources.Load<AudioClip>("explo1.wav");
+		sndSource=GetComponentInChildren<AudioSource>();
+		sndSource.clip=sndExplo;
     }
 
     // Update is called once per frame
@@ -51,19 +59,50 @@ public class PsychEnemy : MonoBehaviour {
 
             fxController.scaleMorpher.globalScaleModifier = scale;
 
+			if (false) //skip raycasts for testing
+			if ( (lastRaycast+=Time.fixedDeltaTime) > 0.333f ){
+				//they go toward the last known player position unless they can see and follow him
+				RaycastHit hit;
+				var rayDirection = target.transform.position - transform.position;
+				if (Physics.Raycast (transform.position,rayDirection, out hit)) {
+					if (hit.transform == target.transform) {
+						// enemy can see the player!
+						navAgent.SetDestination(target.transform.position);
+					} else {
+						// there is something obstructing the view
+					}
+				}
+				lastRaycast=0;
+
+			}
+
         }
         else //if light is over max ratio
         {
             //scale = 0.1f;//MathHelper.EaseOut(LifeRatio, LifeRatio, LifeRatio);
 
             //blow it up
-            PlayBlowParticles();
+			Explode();
 
 
         }
 
 
     }
+
+	public void Explode(){
+		PlayExploSound();
+		PlayBlowParticles();
+		DestroyObject(this.gameObject);
+	}
+
+	public void PlayExploSound(){
+		sndSource.transform.SetParent(null,true);
+		sndSource.pitch=Random.Range(0.85f,1.15f);
+
+		sndSource.PlayOneShot(sndExplo);
+		Destroy(sndSource.gameObject,sndExplo.length*1.25f);
+	}
 
     public void PlayBlowParticles()
     {
@@ -73,9 +112,9 @@ public class PsychEnemy : MonoBehaviour {
             ps.transform.SetParent(null);
             ps.loop = false;
 
-            int nbParts= 3000;
+            int nbParts= 1500;
             int nbBatchs = 10;
-            ps.maxParticles = nbParts / (int)scale;
+            ps.maxParticles += nbParts / (int)scale;
             for (float i=1; i<= nbBatchs; ++i)
             {
                 ps.startSize = LifeRatio * LifeRatio* scale;
@@ -83,13 +122,14 @@ public class PsychEnemy : MonoBehaviour {
                 ps.startLifetime *= 0.4f* scale;                
                 
                 ps.Emit(nbParts / nbBatchs);
-                scale += i*0.5f;
+                scale += i*0.4f;
+				scale=Mathf.Min(scale,5f);
             }
 
-            Destroy(ps.gameObject, ps.startLifetime * 2);
+            //Destroy(ps.gameObject, ps.startLifetime * 2);
             //ps.Play();
         }
-        DestroyObject(this.gameObject);
+        
     }
 
     void InitParticleFilter()
@@ -147,7 +187,7 @@ public class PsychEnemy : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision){
 		if (collision.transform.GetComponent<PlayerCharacter>() ){
-			PlayBlowParticles();
+			Explode();
 		}
 	}
 }
