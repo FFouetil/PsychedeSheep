@@ -8,6 +8,7 @@ public class PsychEnemy : MonoBehaviour {
     public EffectController fxController {get; protected set;}
 	public AudioSource sndSource;
 	public AudioClip sndExplo;
+	public AudioClip sndPouic;
 
     public float defaultLife=100;
     public float currentLife;
@@ -23,6 +24,7 @@ public class PsychEnemy : MonoBehaviour {
 	protected float lastRaycast=0f;
 
 	protected Vector3 spawnLocation;
+	protected Vector3 lastPouicLocation;
 
     // Use this for initialization
     void Awake () {
@@ -38,6 +40,7 @@ public class PsychEnemy : MonoBehaviour {
 		sndSource=GetComponentInChildren<AudioSource>();
 		sndSource.clip=sndExplo;
 		spawnLocation=transform.position;
+		lastPouicLocation=transform.position;
     }
 
     // Update is called once per frame
@@ -50,6 +53,12 @@ public class PsychEnemy : MonoBehaviour {
         //if life is below max ratio
 		if (LifeRatio < overlifeLimitRatio )
         {
+			if (fxController.scaleMorpher.IsStartingPhase && Vector3.Distance(transform.position,lastPouicLocation) > 0.75f){
+				sndSource.pitch=Random.Range(0.9f,1.1f);
+				sndSource.PlayOneShot(sndPouic);
+				lastPouicLocation=transform.position;
+			}
+
 			if (LifeRatio <= 1f){
 				scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
 				currentLife+=0.5f;
@@ -107,7 +116,7 @@ public class PsychEnemy : MonoBehaviour {
 	public void PlayExploSound(){
 		sndSource.transform.SetParent(null,true);
 		sndSource.pitch=Random.Range(0.85f,1.15f);
-
+		sndSource.Stop();
 		sndSource.PlayOneShot(sndExplo);
 		Destroy(sndSource.gameObject,sndExplo.length*1.25f);
 	}

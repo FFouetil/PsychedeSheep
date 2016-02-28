@@ -30,7 +30,7 @@ public class ScaleMorpher : MonoBehaviour, ITimed {
 	float sign=1;
     float timerPhase;
 
-
+	public bool IsStartingPhase { get; protected set;}
 	// Use this for initialization
 	void Start () {
         originalScale = transform.localScale;
@@ -38,8 +38,10 @@ public class ScaleMorpher : MonoBehaviour, ITimed {
 	
 	// Update is called once per frame
 	void Update () {
+		morphCycleDuration=Mathf.Max(0.25f,morphCycleDuration);
         morphCycleTimer += Time.deltaTime;
-        morphCycleTimer = morphCycleTimer < morphCycleDuration ? morphCycleTimer : 0;
+		IsStartingPhase=!(morphCycleTimer < morphCycleDuration);
+		morphCycleTimer = !IsStartingPhase ? morphCycleTimer : 0;
         
 		timerPhase = GetPhaseRatio(morphingMode);
 

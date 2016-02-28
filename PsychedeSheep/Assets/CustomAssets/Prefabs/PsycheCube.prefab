@@ -352,15 +352,15 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
-  Priority: 128
+  Priority: 189
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -426,8 +426,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0aa5f8c9657a488c3192f2ad3f8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sndSource: {fileID: 0}
+  sndSource: {fileID: 8210758}
   sndExplo: {fileID: 8300000, guid: 64860b35d9aa1fd41ac873b9a76e0f19, type: 3}
+  sndPouic: {fileID: 8300000, guid: 40fd0cb1cd58ac2458f06f39201b8ee0, type: 3}
   defaultLife: 100
   currentLife: 100
   overlifeLimitRatio: 1.5
@@ -3673,11 +3674,27 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: sndSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8210758}
     - target: {fileID: 0}
       propertyPath: sndExplo
       value: 
       objectReference: {fileID: 8300000, guid: 64860b35d9aa1fd41ac873b9a76e0f19, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sndPouic
+      value: 
+      objectReference: {fileID: 8300000, guid: 40fd0cb1cd58ac2458f06f39201b8ee0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxDistance
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Priority
+      value: 189
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131510}

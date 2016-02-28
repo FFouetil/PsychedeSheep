@@ -48,6 +48,7 @@ public class VacuumGun : BaseGun
     [Space]
     protected List<ParticleSystem> fxPartSystems;
     protected ParticleSystem.Particle[] p = new ParticleSystem.Particle[2500];
+	protected AudioSource wpnSndSrc;
 
     // Use this for initialization
     void Awake()
@@ -56,6 +57,10 @@ public class VacuumGun : BaseGun
         col = GetComponentInChildren<SphereCollider>();
         if (col)
             col.isTrigger = false;
+
+		if (!wpnSndSrc){
+			wpnSndSrc=GetComponent<AudioSource>();
+		}
     }
 
     void Start()
@@ -102,7 +107,8 @@ public class VacuumGun : BaseGun
             isBlowing = true;
             blowFxMain.Play();
             Debug.Log("Pressing Fire1");
-            PlayAspirationParticles();
+            //PlayAspirationParticles();
+			wpnSndSrc.Play();
         }
         else if (Input.GetButton("Fire1"))
         {
@@ -115,6 +121,7 @@ public class VacuumGun : BaseGun
             isBlowing = false;
             blowFxMain.Stop();
             Debug.Log("Releasing Fire1");
+			wpnSndSrc.Stop();
 
         }
 
