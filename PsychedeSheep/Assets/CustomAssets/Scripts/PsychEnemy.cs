@@ -51,7 +51,7 @@ public class PsychEnemy : MonoBehaviour {
 		//var targetDist=Vector3.Distance(transform.position,target.transform.position);
 		//Debug.Log("Target dist: "+targetDist);
         //if life is below max ratio
-		if (LifeRatio < overlifeLimitRatio )
+		if (LifeRatio < overlifeLimitRatio && LifeRatio > 0.33f)
         {
 			if (fxController.scaleMorpher.IsStartingPhase && Vector3.Distance(transform.position,lastPouicLocation) > 0.75f){
 				sndSource.pitch=Random.Range(0.9f,1.1f);
@@ -60,7 +60,7 @@ public class PsychEnemy : MonoBehaviour {
 			}
 
 			if (LifeRatio <= 1f){
-				scale = Mathf.LerpUnclamped(0.5f, 1f, LifeRatio);
+				scale = Mathf.LerpUnclamped(0.75f, 1f, LifeRatio);
 				currentLife+=0.5f;
 			}
                 
